@@ -1,12 +1,12 @@
 # TP1 Engenharia de Software 
 
 # Objetivo: 
-Criar um sistema de compras para um supermercado. O sistema chamará SacolApp.
+O objetivo do projeto é desenvolver um sistema de compras de um supermercado, possibilitando que usuários
+adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema chamará SacolApp.
 
 # Features: 
 - cadastrar usuário
 - fazer login
-- criar carrinho de compras
 - adicionar itens ao carrinho
 - editar item(descrição, quantidade)
 - exluir itens do carrinho
@@ -22,6 +22,6 @@ Criar um sistema de compras para um supermercado. O sistema chamará SacolApp.
 # Tecnologias 
 - React Native
 - Express
-- Node js
+- Node
 - Typescript
 - SQLite
