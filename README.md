@@ -1,7 +1,7 @@
 # TP1 Engenharia de Software 
 
 # Objetivo: 
-Criar um sistema de compras para um supermercado. O sistema chamará SacolApp
+Criar um sistema de compras para um supermercado. O sistema chamará SacolApp.
 
 # Features: 
 - cadastrar usuário
@@ -12,10 +12,10 @@ Criar um sistema de compras para um supermercado. O sistema chamará SacolApp
 - exluir itens do carrinho
   
 # Membros da equipe: 
-## Frontend:
+## Front-end:
 - Bernardo do Nascimento Nunes 
 - Gabriela Tavares Barreto
-## Backend
+## Back-end
 - Enzo Pinheiro Pierazolli
 - Avelar Ribeiro Hostalácio
 
