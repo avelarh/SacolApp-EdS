@@ -24,3 +24,4 @@ Criar um sistema de compras para um supermercado. O sistema chamará SacolApp.
 - Express
 - Node js
 - Typescript
+- SQLite
