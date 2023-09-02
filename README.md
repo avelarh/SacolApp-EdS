@@ -49,8 +49,8 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
 
 # Backlog do sprint
 -História #1: Como um usuário do sistema, quero conseguir me cadastrar no sistema
- 
-  Tarefas e responsáveis:
+   
+    Tarefas e responsáveis:
     
     #F03 [FE] Tela de cadastro de usuário - parte visual
     
