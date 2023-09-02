@@ -51,44 +51,43 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
 -História #1: Como um usuário do sistema, quero conseguir me cadastrar no sistema
  
   Tarefas e responsáveis:
-  
-  #F03 [FE] Tela de cadastro de usuário - parte visual
-  
-  #F04 [FE] Tela de cadastro de usuário - conexão com o back
-  
-  #B02 [BE] Rotas para CRUD do usuário: [Enzo]
+    
+    #F03 [FE] Tela de cadastro de usuário - parte visual
+    
+    #F04 [FE] Tela de cadastro de usuário - conexão com o back
+    
+    #B02 [BE] Rotas para CRUD do usuário: [Enzo]
 
 -História #2: Como um usuário do sistema, quero fazer login com e-mail e senha para acessar o sistema, mantendo a segurança dos dados.
   
-  Tarefas e responsáveis:
-  
-  #F01 [FE] Tela de login - parte visual
-  
-  #F02 [FE] Tela de login - conexão com o back
-  
-  #B08 [BE] Rotas de Login [Avelar]
-  
-  #B03 [BE] Autenticação Login com JWT: [Avelar]
+    Tarefas e responsáveis:
+    #F01 [FE] Tela de login - parte visual
+    
+    #F02 [FE] Tela de login - conexão com o back
+    
+    #B08 [BE] Rotas de Login [Avelar]
+    
+    #B03 [BE] Autenticação Login com JWT: [Avelar]
 
 -História 3: Como um usuário do sistema, quero adicionar itens ao meu carrinho de compra no sistema.
   
-  Tarefas e responsáveis:
-  
-  #F05 [FE] Tela de listagem de produtos
-  
-  #F07 [FE] Edição de produtos do carrinho
-  
-  #B06 [BE] Rotas para adição de produtos ao carrinho: [Enzo]
-  
-  #F06 [FE] Modal para adicionar produto
+    Tarefas e responsáveis:
+    
+    #F05 [FE] Tela de listagem de produtos
+    
+    #F07 [FE] Edição de produtos do carrinho
+    
+    #B06 [BE] Rotas para adição de produtos ao carrinho: [Enzo]
+    
+    #F06 [FE] Modal para adicionar produto
 
 -História 4: Como um administrador do sistema, quero poder adicionar produtos disponíveis para compra no meu sistema.
 
-  Tarefas e responsáveis:
-  
-  #F08 [FE] Sistema de cadastramento de um produto, por um admin
-  
-  #B05 [BE] Rotas para CRUD de produtos: [Avelar]
-  
-  #B04 [BE] Rotas para CRUD de admin: [Avelar]
+    Tarefas e responsáveis:
+    
+    #F08 [FE] Sistema de cadastramento de um produto, por um admin
+    
+    #B05 [BE] Rotas para CRUD de produtos: [Avelar]
+    
+    #B04 [BE] Rotas para CRUD de admin: [Avelar]
 
