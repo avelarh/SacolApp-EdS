@@ -5,11 +5,11 @@ O objetivo do projeto é desenvolver um sistema de compras de um supermercado, p
 adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema chamará SacolApp.
 
 # Features: 
-- cadastrar usuário
-- fazer login
-- adicionar itens ao carrinho
-- editar item(descrição, quantidade)
-- exluir itens do carrinho
+- Cadastrar usuário
+- Fazer login
+- Adicionar itens ao carrinho
+- Editar item(descrição, quantidade)
+- Excluir itens do carrinho
   
 # Membros da equipe: 
 ## Front-end:
@@ -27,28 +27,28 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
 - SQLite
 
 # Backlog do Produto
--História #1: Como um usuário do sistema, quero conseguir me cadastrar no sistema
-
--História #2: Como um usuário do sistema, quero fazer login com e-mail e senha para acessar o sistema, mantendo a segurança dos dados.
-
--História 3: Como um usuário do sistema, quero adicionar itens ao meu carrinho de compra no sistema.
-
--História 4: Como um administrador do sistema, quero poder adicionar produtos disponíveis para compra no meu sistema.
-
--História 5: Como um usuário do sistema, quero poder editar meus produtos no carrinho de compras, seja editá-los ou excluí-los.
-
--História 6: Como um usuário do sistema, quero poder pesquisar produtos por categorias
-
--História 7: Como um usuário do sistema, quero marcar produtos como favoritos e armazená-los em uma aba dedicada
-
--História 8: Como um usuário do sistema, quero poder recuperar minha senha por email caso eu esqueça-a
-
--História 9: Como um usuário do sistema, quero poder realizar a compra dos produtos
-
--História 10: Como um usuário do sistema, quero poder filtrar os produtos em função de seu preço
+    -História #1: Como um usuário do sistema, quero conseguir me cadastrar no sistema
+    
+    -História #2: Como um usuário do sistema, quero fazer login com e-mail e senha para acessar o sistema, mantendo a segurança dos dados.
+    
+    -História 3: Como um usuário do sistema, quero adicionar itens ao meu carrinho de compra no sistema.
+    
+    -História 4: Como um administrador do sistema, quero poder adicionar produtos disponíveis para compra no meu sistema.
+    
+    -História 5: Como um usuário do sistema, quero poder editar meus produtos no carrinho de compras, seja editá-los ou excluí-los.
+    
+    -História 6: Como um usuário do sistema, quero poder pesquisar produtos por categorias
+    
+    -História 7: Como um usuário do sistema, quero marcar produtos como favoritos e armazená-los em uma aba dedicada
+    
+    -História 8: Como um usuário do sistema, quero poder recuperar minha senha por email caso eu esqueça-a
+    
+    -História 9: Como um usuário do sistema, quero poder realizar a compra dos produtos
+    
+    -História 10: Como um usuário do sistema, quero poder filtrar os produtos em função de seu preço
 
 # Backlog do sprint
--História #1: Como um usuário do sistema, quero conseguir me cadastrar no sistema
+## -História #1: Como um usuário do sistema, quero conseguir me cadastrar no sistema
    
     Tarefas e responsáveis:
     
@@ -58,7 +58,7 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
     
     #B02 [BE] Rotas para CRUD do usuário: [Enzo]
 
--História #2: Como um usuário do sistema, quero fazer login com e-mail e senha para acessar o sistema, mantendo a segurança dos dados.
+## -História #2: Como um usuário do sistema, quero fazer login com e-mail e senha para acessar o sistema, mantendo a segurança dos dados.
   
     Tarefas e responsáveis:
     #F01 [FE] Tela de login - parte visual
@@ -69,7 +69,7 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
     
     #B03 [BE] Autenticação Login com JWT: [Avelar]
 
--História 3: Como um usuário do sistema, quero adicionar itens ao meu carrinho de compra no sistema.
+## -História 3: Como um usuário do sistema, quero adicionar itens ao meu carrinho de compra no sistema.
   
     Tarefas e responsáveis:
     
@@ -81,7 +81,7 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
     
     #F06 [FE] Modal para adicionar produto
 
--História 4: Como um administrador do sistema, quero poder adicionar produtos disponíveis para compra no meu sistema.
+## -História 4: Como um administrador do sistema, quero poder adicionar produtos disponíveis para compra no meu sistema.
 
     Tarefas e responsáveis:
     
