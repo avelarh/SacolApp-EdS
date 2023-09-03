@@ -31,12 +31,12 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
     
     -História #2: Como um usuário do sistema, quero fazer login com e-mail e senha para acessar o sistema, mantendo a segurança dos dados.
     
-    -História 3: Como um usuário do sistema, quero adicionar itens ao meu carrinho de compra no sistema.
+    -História 3: Como um usuário do sistema, quero poder editar(adicionar/excluir) produtos no carrinho de compras.    
     
     -História 4: Como um administrador do sistema, quero poder adicionar produtos disponíveis para compra no meu sistema.
-    
-    -História 5: Como um usuário do sistema, quero poder editar meus produtos no carrinho de compras, seja editá-los ou excluí-los.
-    
+
+    -História 5: Como um usuário do sistema, quero poder filtrar os produtos em função de seu preço
+
     -História 6: Como um usuário do sistema, quero poder pesquisar produtos por categorias
     
     -História 7: Como um usuário do sistema, quero marcar produtos como favoritos e armazená-los em uma aba dedicada
@@ -45,7 +45,7 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
     
     -História 9: Como um usuário do sistema, quero poder realizar a compra dos produtos
     
-    -História 10: Como um usuário do sistema, quero poder filtrar os produtos em função de seu preço
+    -História 5: Como um usuário do sistema, quero poder filtrar os produtos em função de seu preço
 
 # Backlog do sprint
 ## -História #1: Como um usuário do sistema, quero conseguir me cadastrar no sistema
@@ -69,7 +69,7 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
     
     #B03 [BE] Autenticação Login com JWT: [Avelar]
 
-## -História 3: Como um usuário do sistema, quero adicionar itens ao meu carrinho de compra no sistema.
+## -História 3: Como um usuário do sistema, quero poder editar(adicionar/excluir) produtos no carrinho de compras.    
   
     Tarefas e responsáveis:
     
@@ -77,7 +77,7 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
     
     #F07 [FE] Edição de produtos do carrinho
     
-    #B06 [BE] Rotas para adição de produtos ao carrinho: [Enzo]
+    #B06 [BE] Rotas para edição de produtos ao carrinho: [Enzo]
     
     #F06 [FE] Modal para adicionar produto
 
