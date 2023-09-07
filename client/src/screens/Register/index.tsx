@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 
-import { UserDataCreate } from "../../services/requests/User/CreateUser";
+import { UserData } from "../../services/requests/User/CreateUser";
 import { RootStackParamList } from "../../services/routes";
 import { apiCep } from "../../services/apiCep";
 
@@ -62,7 +62,7 @@ export function Register({ navigation }: Props) {
 
   const [showPassword, setShowPassword] = useState(true);
 
-  const [registerData, setRegisterData] = useState<UserDataCreate>({
+  const [registerData, setRegisterData] = useState<UserData>({
     name: "",
     email: "",
     cpf: "",
@@ -90,7 +90,7 @@ export function Register({ navigation }: Props) {
 
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
 
-  function updateRegisterData(newRegisterData: Partial<UserDataCreate>) {
+  function updateRegisterData(newRegisterData: Partial<UserData>) {
     if (!registerData) return;
     setRegisterData({ ...registerData, ...newRegisterData });
   }

@@ -55,6 +55,7 @@ export default function Login({ navigation }: Props) {
     try {
       setIsLoading(true);
       setIsLoading(false);
+      navigation.navigate("HomePage");
     } catch (err: any) {
       if (err.response.data.errors) {
         setModalMsg(err.response.data.errors[0].msg);
