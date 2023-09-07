@@ -15,11 +15,8 @@ import {
   Title,
   TextFieldWrapper,
   ButtonWrapper,
-  Divider,
   RegisterContainer,
   RegisterContent,
-  ForgotPasswordContainer,
-  ForgotPasswordContent,
 } from "./styles";
 import { LoginData } from "../../services/requests/User/Login";
 
@@ -40,6 +37,8 @@ export default function Login({ navigation }: Props) {
 
   const [errorMessage, setErrorMessage] = useState<boolean>(false);
 
+  const [modalMsg, setModalMsg] = useState<string>("");
+
   const [showPassword, setShowPassword] = useState(true);
 
   const [loginData, setLoginData] = useState<LoginData>({
@@ -57,6 +56,12 @@ export default function Login({ navigation }: Props) {
       setIsLoading(true);
       setIsLoading(false);
     } catch (err: any) {
+      if (err.response.data.errors) {
+        setModalMsg(err.response.data.errors[0].msg);
+      } else {
+        setModalMsg(err.response.data);
+      }
+
       setIsLoading(false);
       setErrorMessage(true);
     }

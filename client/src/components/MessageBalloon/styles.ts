@@ -26,14 +26,13 @@ export const BalloonContainer = styled.View`
 
 export const WhiteBackground = styled.View`
   width: ${RFValue(200)}px;
-  background-color: ${({ theme }) => theme.colors.ballonBackground};
+  background-color: #F2F2F2;
   border-radius: 10px;
   z-index: 10;
 `;
 
 export const Title = styled.Text`
   font-size: ${RFValue(16)}px;
-  font-family: ${({ theme }) => theme.fonts.regular};
   font-weight: bold;
   text-align: center;
   margin-top: ${RFValue(10)}px;
@@ -41,7 +40,6 @@ export const Title = styled.Text`
 
 export const BalloonText = styled.Text`
   font-size: ${RFValue(14)}px;
-  font-family: ${({ theme }) => theme.fonts.regular};
   text-align: center;
   padding: ${RFValue(10)}px;
 `;
@@ -64,7 +62,7 @@ export const ButtonText = styled.Text<ButtonTextProps>`
   color: ${(props) =>
     props.redConfirm == true
       ? "#FF3B30"
-      : ({ theme }) => theme.colors.light_blue};
+      : "#007AFF"};
   font-size: ${RFValue(14)}px;
   text-align: center;
   margin: auto;
