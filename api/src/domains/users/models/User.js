@@ -1,4 +1,4 @@
-const sequelize = require('../../database');
+const sequelize = require('../../../../database/index');
 const {DataTypes} = require('sequelize');
 
 
@@ -28,3 +28,11 @@ const User = sequelize.define('Users', {
         allowNull: false,
     },
 });
+
+User.sync({alter: true, force: false})
+  .then(() => {
+    console.log('User table was (re)created');
+  })
+  .catch((err) => console.log(err));
+
+module.exports = User;

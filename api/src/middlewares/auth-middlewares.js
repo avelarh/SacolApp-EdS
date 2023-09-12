@@ -1,11 +1,9 @@
 const { JwtPayload, sign, verify } = require ('jsonwebtoken');
 const { compare } = require ('bcrypt');
-const { User } = require ('../domains/users/models/User');
-const { PermissionError } = require ('../../errors/PermissionError');
-const { statusCodes } = require ('../../utils/constants/status-codes');
-const { PayloadParams } = require ('../domains/users/types/PayloadParams');
-const { Request, Response, NextFunction } = require ('express');
-const { getEnv } = require ('../../utils/functions/get-env');
+const User = require ('../domains/users/models/User');
+const PermissionError = require ('../../errors/PermissionError');
+const statusCodes = require ('../../utils/constants/statusCodes');
+const getEnv = require ('../../utils/functions/getEnv');
 
 function generateJWT(user, res) {
   const body = {

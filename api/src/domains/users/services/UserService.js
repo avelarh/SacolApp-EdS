@@ -1,11 +1,10 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/index.js');
-const passwordToken = require('../../redis/password-token');
-const NotAuthorizedError = require('../../errors/NotAuthorizedError');
-const PermissionError = require('../../errors/PermissionError');
-const InvalidParamError = require('../../errors/InvalidParamError');
-const QueryError = require('../../errors/QueryError');
-const TokenError = require('../../errors/TokenError');
+const User = require('../models/User');
+const NotAuthorizedError = require('../../../../errors/NotAuthorizedError');
+const PermissionError = require('../../../../errors/PermissionError');
+const InvalidParamError = require('../../../../errors/InvalidParamError');
+const QueryError = require('../../../../errors/QueryError');
+const TokenError = require('../../../../errors/TokenError');
 
 
 class UserService {
@@ -15,22 +14,22 @@ class UserService {
         return encryptedPassword;
     }
 
-    async create(user) {
-        if (user.role == "admin") {
+    async create(body) {
+        if (body.role == "admin") {
             throw new PermissionError("Não é possível criar um usuário com o perfil de administrador");
         }
 
-        const user = await User.findOne({where: {email: user.email}});
+        const user = await User.findOne({where: {email: body.email}});
     
         if (user) {
         throw new QueryError('E-mail já cadastrado!');
         }
 
         const newUser = {
-            name: user.name,
-            email: user.email,
-            password: user.password,
-            role: user.role,
+          name: body.name,
+          email: body.email,
+          password: body.password,
+          role: body.role,
         };
         newUser.password = await this.encryptPassword(newUser.password);
         await User.create(newUser);
@@ -84,3 +83,5 @@ class UserService {
         await user.destroy();
     }
 }
+
+module.exports = new UserService;
