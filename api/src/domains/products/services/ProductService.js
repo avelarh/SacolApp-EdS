@@ -1,4 +1,6 @@
 const Product = require('../models/Product');
+const QueryError = require('../../../../errors/QueryError');
+
 
 
 class ProductService {
