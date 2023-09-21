@@ -31,6 +31,7 @@ router.post('/',
 
 router.get('/',
   verifyJWT,
+  checkRole(["admin"]),
   async (req, res, next) => {
     try {
       const users = await UserService.getAll();
@@ -57,6 +58,7 @@ router.get('/user',
 
 router.get('/:id',
   verifyJWT,
+  checkRole(["admin"]),
   async (req, res, next) => {
     try {
       const user = await UserService.getById(req.params.id);

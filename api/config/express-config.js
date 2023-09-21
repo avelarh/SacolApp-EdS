@@ -25,4 +25,7 @@ app.use(express.json());
 const usersRouter = require('../src/domains/users/controllers/index');
 app.use('/api/users', usersRouter);
 
+const productsRouter = require('../src/domains/products/controllers/index');
+app.use('/api/products', productsRouter);
+
 module.exports = app;
