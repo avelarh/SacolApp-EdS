@@ -57,11 +57,11 @@ class UserService {
     }
 
     async update(id, body, loggedUser){
-        if (loggedUser.role != userRoles.admin && loggedUser.id != id) {
+        if (loggedUser.role != 'admin' && loggedUser.id != id) {
           throw new NotAuthorizedError('Você não tem permissão para editar outro usuário!');
         }
     
-        if (body.role && loggedUser.role != userRoles.admin && loggedUser.role != body.role) {
+        if (body.role && loggedUser.role != 'admin' && loggedUser.role != body.role) {
           throw new NotAuthorizedError('Você não tem permissão para editar seu cargo!');
         }
     
