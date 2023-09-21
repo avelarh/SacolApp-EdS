@@ -14,7 +14,7 @@ const Product = sequelize.define('Products', {
         allowNull: false,
     },
     price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
     },
     description: {
@@ -32,3 +32,5 @@ Product.sync({alter: true, force: false})
     console.log('Product table was (re)created');
   })
   .catch((err) => console.log(err));
+
+module.exports = Product;

@@ -3,6 +3,7 @@ const QueryError = require('../../../../errors/QueryError');
 
 
 
+
 class ProductService {
     async create(body) {
         const newProduct = {
@@ -49,3 +50,5 @@ class ProductService {
         await product.destroy();
     }
 }
+
+module.exports = new ProductService;

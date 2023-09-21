@@ -1,15 +1,26 @@
-const ProductService = require('./ProductService');
+const ProductService = require('../services/ProductService');
 const router = require('express').Router();
 const {verifyJWT, checkRole} = require('../../../middlewares/auth-middlewares');
 const statusCodes = require('../../../../utils/constants/statusCodes');
+const multerConfig = require('../../../middlewares/multer');
+const multer = require('multer');
+
 
 
 router.post('/',
     verifyJWT,  
     checkRole(['admin']),
+    multer(multerConfig).single('image'),
     async (req, res, next) => {
         try {
-            await ProductService.create(req.body);
+            const product = {
+                name: req.body.name,
+                price: req.body.price,
+                description: req.body.description,
+                image: req.file.filename,
+            }
+            //res.status(statusCodes.SUCCESS).json(product);
+            await ProductService.create(product);
             res.status(statusCodes.CREATED).end();
         } catch (error) {
             next(error);
@@ -68,3 +79,5 @@ router.delete('/:id',
         }
     }
 );
+
+module.exports = router;
