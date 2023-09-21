@@ -4,6 +4,9 @@ const {verifyJWT, checkRole} = require('../../../middlewares/auth-middlewares');
 const statusCodes = require('../../../../utils/constants/statusCodes');
 const multerConfig = require('../../../middlewares/multer');
 const multer = require('multer');
+const fs = require('fs');
+const util = require('util');
+const path = require('path');
 
 
 
@@ -19,7 +22,6 @@ router.post('/',
                 description: req.body.description,
                 image: req.file.filename,
             }
-            //res.status(statusCodes.SUCCESS).json(product);
             await ProductService.create(product);
             res.status(statusCodes.CREATED).end();
         } catch (error) {
@@ -72,7 +74,10 @@ router.delete('/:id',
     checkRole(['admin']),
     async (req, res, next) => {
         try {
-            await ProductService.delete(req.params.id);
+            const key = await ProductService.delete(req.params.id);
+            util.promisify(fs.unlink)(
+                path.resolve(__dirname, '..', 'images', key)
+            );
             res.status(statusCodes.NO_CONTENT).end();
         } catch(error){
             next(error);

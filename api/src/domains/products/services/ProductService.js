@@ -42,12 +42,22 @@ class ProductService {
         if (!product) {
             throw new QueryError(`Não há um produto com o ID ${id}!`);
         }
-        await product.update(body);
+        const newProduct = {
+            name: body.name,
+            price: body.price,
+            description: body.description,
+        };
+        await product.update(newProduct);
     }
 
     async delete(id) {
         const product = await this.getById(id);
+        if (!product) {
+            throw new QueryError(`Não há um produto com o ID ${id}!`);
+        }
+        const key = product.image;
         await product.destroy();
+        return key;
     }
 }
 
