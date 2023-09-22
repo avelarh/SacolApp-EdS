@@ -29,7 +29,7 @@ const User = sequelize.define('Users', {
     },
 });
 
-User.sync({alter: true, force: false})
+User.sync({alter: false, force: false})
   .then(() => {
     console.log('User table was (re)created');
   })
