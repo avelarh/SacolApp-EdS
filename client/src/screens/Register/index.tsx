@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 
-import { UserData } from "../../services/requests/User/CreateUser";
+import { CreateUser, UserData } from "../../services/requests/User/CreateUser";
 import { RootStackParamList } from "../../services/routes";
 import { apiCep } from "../../services/apiCep";
 
@@ -27,6 +27,7 @@ import {
 } from "./styles";
 import theme from "../../global/styles/theme";
 import { Title } from "../Login/styles";
+import { UserCreateData } from "../../services/interfaces";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "Register">;
 
@@ -49,6 +50,8 @@ export function Register({ navigation }: Props) {
 
   const [modalMsg, setModalMsg] = useState<string>("");
 
+  const [password, setPassword] = useState<string>("");
+
   const [requiredFieldsMsg, setRequiredFieldsMsg] = useState<boolean>(false);
 
   const [notSavedDataMsg, setNotSavedDataMsg] = useState<boolean>(false);
@@ -57,21 +60,11 @@ export function Register({ navigation }: Props) {
 
   const [passwordMatchMsg, setPasswordMatchMsg] = useState<boolean>(false);
 
-  const [isRegisterSecondPart, setIsRegisterSecondPart] =
-    useState<boolean>(false);
-
   const [showPassword, setShowPassword] = useState(true);
 
-  const [registerData, setRegisterData] = useState<UserData>({
+  const [registerData, setRegisterData] = useState<UserCreateData>({
     name: "",
     email: "",
-    cpf: "",
-    cep: "",
-    street: "",
-    number: "",
-    neighborhood: "",
-    city: "",
-    state: "",
     password: "",
   });
 
@@ -88,8 +81,6 @@ export function Register({ navigation }: Props) {
     } catch (err) {}
   };
 
-  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
-
   function updateRegisterData(newRegisterData: Partial<UserData>) {
     if (!registerData) return;
     setRegisterData({ ...registerData, ...newRegisterData });
@@ -101,19 +92,19 @@ export function Register({ navigation }: Props) {
       return;
     }
 
-    if (registerData.password != passwordConfirmation) {
+    if (registerData.password != password) {
       setPasswordMatchMsg(true);
       return;
     }
 
     try {
-      if (!validateCPF(registerData.cpf)) {
+      /* if (!validateCPF(registerData.cpf)) {
         setModalMsg("CPF inválido");
         setErrorMessage(true);
         return;
-      }
+      } */
       setIsLoading(true);
-      /* await createUser(registerData); */
+      await CreateUser(registerData);
       setIsLoading(false);
       navigation.navigate("Login");
     } catch (err: any) {
@@ -131,29 +122,8 @@ export function Register({ navigation }: Props) {
   function IsThereEmptyField() {
     if (
       registerData.name == "" ||
-      registerData.cep == "" ||
-      registerData.street == "" ||
-      registerData.neighborhood == "" ||
-      registerData.number == "" ||
-      registerData.state == "" ||
-      registerData.email == "" ||
-      registerData.cpf == "" ||
       registerData.password == "" ||
-      passwordConfirmation == ""
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  function IsThereEmptyFieldHalf() {
-    if (
-      registerData.name == "" ||
-      registerData.cep == "" ||
-      registerData.street == "" ||
-      registerData.neighborhood == "" ||
-      registerData.number == "" ||
-      registerData.state == ""
+      password == ""
     ) {
       return true;
     }
@@ -164,189 +134,80 @@ export function Register({ navigation }: Props) {
     <Container>
       <BackButton
         onPress={() => {
-          if (!isRegisterSecondPart) {
-            setNotSavedDataMsg(true);
-          } else {
-            setIsRegisterSecondPart(false);
-          }
+          setNotSavedDataMsg(true);
         }}
       />
       <Title>Cadastro</Title>
-      {!isRegisterSecondPart ? (
-        <SpaceAround>
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.name}
-              onChange={(value: string) => updateRegisterData({ name: value })}
-              mask={inputMasks.onlyLetters}
-              placeholder="Nome"
-              autoCapitalize="words"
-              textContentType="name"
-              autoComplete="name"
-            />
-          </TextFieldWrapper>
+      <SpaceAround>
+        <TextFieldWrapper>
+          <TextField
+            required
+            value={registerData.name}
+            onChange={(value: string) => updateRegisterData({ name: value })}
+            mask={inputMasks.onlyLetters}
+            placeholder="Nome"
+            autoCapitalize="words"
+            textContentType="name"
+            autoComplete="name"
+          />
+        </TextFieldWrapper>
 
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.cep}
-              onChange={(value: string) => {
-                updateRegisterData({ cep: value });
-                searchCep(value);
-              }}
-              placeholder="CEP"
-              mask={inputMasks.cep}
-              textContentType="postalCode"
-              keyboardType="number-pad"
-              autoComplete="postal-code"
-              maxLength={9}
-            />
-          </TextFieldWrapper>
+        <TextFieldWrapper>
+          <TextField
+            required
+            value={registerData.email}
+            onChange={(value: string) => updateRegisterData({ email: value })}
+            placeholder="Email"
+            autoCapitalize="words"
+            textContentType="name"
+            autoComplete="name"
+          />
+        </TextFieldWrapper>
 
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.state}
-              onChange={(value: string) => updateRegisterData({ state: value })}
-              mask={inputMasks.onlyLetters}
-              placeholder="Estado"
-              textContentType="addressState"
+        <TextFieldWrapper>
+          <TextField
+            required
+            value={registerData.password}
+            onChange={(value: string) =>
+              updateRegisterData({ password: value })
+            }
+            placeholder="Senha"
+            secureTextEntry={showPassword}
+            autoCapitalize="none"
+            textContentType="password"
+            autoCorrect={false}
+            autoComplete="password"
+          />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.showPasswordButton}
+          >
+            <FontAwesome
+              name={showPassword ? "eye-slash" : "eye"}
+              size={22}
+              color="#24203B"
             />
-          </TextFieldWrapper>
+          </TouchableOpacity>
+        </TextFieldWrapper>
 
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.city}
-              onChange={(value: string) => updateRegisterData({ city: value })}
-              mask={inputMasks.onlyLetters}
-              placeholder="Cidade"
-              textContentType="addressCity"
-            />
-          </TextFieldWrapper>
+        <TextFieldWrapper>
+          <TextField
+            required
+            value={password!}
+            onChange={(value: string) => setPassword(value)}
+            placeholder="Confirmar Senha"
+            maxLength={10}
+          />
+        </TextFieldWrapper>
 
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.neighborhood}
-              onChange={(value: string) =>
-                updateRegisterData({ neighborhood: value })
-              }
-              placeholder="Bairro"
-            />
-          </TextFieldWrapper>
+        <WarningText>
+          Atenção: campos marcados com * são obrigatórios.
+        </WarningText>
 
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.street}
-              onChange={(value: string) =>
-                updateRegisterData({ street: value })
-              }
-              placeholder="Rua"
-              textContentType="fullStreetAddress"
-            />
-          </TextFieldWrapper>
-
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.number}
-              onChange={(value: string) =>
-                updateRegisterData({ number: value })
-              }
-              placeholder="Número"
-              keyboardType="number-pad"
-              maxLength={10}
-            />
-          </TextFieldWrapper>
-
-          <WarningText>
-            Atenção: campos marcados com * são obrigatórios.
-          </WarningText>
-
-          <ContinueButtonWrapper>
-            <BlueButton
-              buttonText="Continuar"
-              action={() =>
-                IsThereEmptyFieldHalf()
-                  ? setRequiredFieldsMsg(true)
-                  : setIsRegisterSecondPart(true)
-              }
-            />
-          </ContinueButtonWrapper>
-        </SpaceAround>
-      ) : (
-        <SpaceAround>
-          <Subtitle>Falta pouco para finalizarmos seu cadastro!</Subtitle>
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.email}
-              onChange={(value: string) => updateRegisterData({ email: value })}
-              placeholder="Email"
-              autoCapitalize="none"
-              textContentType="emailAddress"
-              keyboardType="email-address"
-              autoCorrect={false}
-              autoComplete="email"
-            />
-          </TextFieldWrapper>
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.cpf}
-              onChange={(value: string) => updateRegisterData({ cpf: value })}
-              placeholder="CPF"
-              mask={inputMasks.cpf}
-              keyboardType="number-pad"
-              maxLength={14}
-            />
-          </TextFieldWrapper>
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={registerData.password}
-              onChange={(value: string) =>
-                updateRegisterData({ password: value })
-              }
-              placeholder="Senha"
-              secureTextEntry={showPassword}
-              autoCapitalize="none"
-              textContentType="password"
-              autoCorrect={false}
-              autoComplete="password"
-            />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={styles.showPasswordButton}
-            >
-              <FontAwesome
-                name={showPassword ? "eye-slash" : "eye"}
-                size={22}
-                color="#24203B"
-              />
-            </TouchableOpacity>
-          </TextFieldWrapper>
-          <TextFieldWrapper>
-            <TextField
-              required
-              value={passwordConfirmation}
-              onChange={(value: string) => setPasswordConfirmation(value)}
-              placeholder="Digite novamente sua senha"
-              secureTextEntry={showPassword}
-              autoCapitalize="none"
-              textContentType="newPassword"
-              autoCorrect={false}
-              autoComplete="password-new"
-            />
-          </TextFieldWrapper>
-          <ButtonWrapper>
-            <BlueButton buttonText="Cadastrar" action={() => setAccept(true)} />
-          </ButtonWrapper>
-        </SpaceAround>
-      )}
+        <ContinueButtonWrapper>
+          <BlueButton buttonText="Cadastrar" action={handleRegister} />
+        </ContinueButtonWrapper>
+      </SpaceAround>
       {isLoading && <Loading />}
       {requiredFieldsMsg && (
         <MessageBalloon

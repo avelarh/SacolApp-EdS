@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Geoprospect",
-    "slug": "Geoprospect",
+    "name": "SacolApp",
+    "slug": "SacolApp",
     "version": "0.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,7 +12,6 @@
       "web"
     ],
     "splash": {
-      "image": "./assets/Splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

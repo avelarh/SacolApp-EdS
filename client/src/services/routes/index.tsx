@@ -5,6 +5,9 @@ import { Register } from "../../screens/Register";
 import { HomePage } from "../../screens/Home";
 import { Profile } from "../../screens/Profile";
 
+import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
@@ -15,7 +18,23 @@ export type RootStackParamList = {
 export function Routes() {
   const { Navigator, Screen } = createStackNavigator<RootStackParamList>();
 
-  return (
+  const { isSignedIn } = useAuth();
+
+  if (isSignedIn) {
+    return (
+      <NavigationContainer>
+        <Navigator
+          initialRouteName="HomePage"
+          screenOptions={{ headerShown: false }}
+        >
+          <Screen name="HomePage" component={HomePage} />
+          <Screen name="Profile" component={Profile} />
+        </Navigator>
+      </NavigationContainer>
+    );
+  } 
+  
+  return(
     <NavigationContainer>
       <Navigator
         initialRouteName="Login"
@@ -27,5 +46,5 @@ export function Routes() {
         <Screen name="Profile" component={Profile} />
       </Navigator>
     </NavigationContainer>
-  );
+  )
 }

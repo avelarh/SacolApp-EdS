@@ -18,7 +18,9 @@ import {
   RegisterContainer,
   RegisterContent,
 } from "./styles";
-import { LoginData } from "../../services/requests/User/Login";
+import { LoginUser } from "../../services/requests/User/Login";
+import { LoginData } from "../../services/interfaces";
+import { useAuth } from "../../services/context/AuthContext";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "Login">;
 
@@ -46,6 +48,8 @@ export default function Login({ navigation }: Props) {
     password: "",
   });
 
+  const { setIsSignedIn } = useAuth();
+
   function updateLoginData(newLoginData: Partial<LoginData>) {
     if (!loginData) return;
     setLoginData({ ...loginData, ...newLoginData });
@@ -55,12 +59,13 @@ export default function Login({ navigation }: Props) {
     try {
       setIsLoading(true);
       setIsLoading(false);
-      navigation.navigate("HomePage");
+      await LoginUser(loginData);
+      setIsSignedIn(true);
     } catch (err: any) {
       if (err.response.data.errors) {
         setModalMsg(err.response.data.errors[0].msg);
       } else {
-        setModalMsg(err.response.data);
+        console.log(err.response.data);
       }
 
       setIsLoading(false);
@@ -109,7 +114,7 @@ export default function Login({ navigation }: Props) {
       {errorMessage && (
         <MessageBalloon
           title="Atenção"
-          text="Email ou senha incorretos"
+          text={modalMsg}
           handleCancelButton={() => {}}
           handleConfirmButton={() => {
             setErrorMessage(false);

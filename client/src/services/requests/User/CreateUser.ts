@@ -1,19 +1,8 @@
+import { api } from "../../api";
 
-export interface UserData{
-  name: string;
-  email: string;
-  cpf: string;
-  cep: string;
-  street: string;
-  number: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  password: string;
-}
+import { UserCreateData } from "../../interfaces";
 
-/* export async function createUser(body: UserDataCreate) {
-  const res = await api.post(`/users`, body);
+export async function CreateUser(body: UserCreateData) {
+  const res = await api.post(`/users/`, body);
   return res.data;
 }
- */

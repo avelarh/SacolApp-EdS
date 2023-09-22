@@ -26,6 +26,8 @@ import {
   ScrollViewWrapper,
 } from "./styles";
 import { UserData } from "../../services/requests/User/CreateUser";
+import { logout } from "../../services/requests/User/Logout";
+import { useAuth } from "../../services/context/AuthContext";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "Profile">;
 
@@ -106,16 +108,18 @@ export function Profile({ navigation }: Props) {
     password: ""
   });
 
+  const { setIsSignedIn } = useAuth();
+
   const handleLogout = async () => {
-    /* try {
+    try {
       setIsLoading(true);
       await logout();
-      setIsLoading(false);
       setIsSignedIn(false);
+      setIsLoading(false);
     } catch (err: any) {
       setIsLoading(false);
       setFailedLogout(true);
-    } */
+    }
   };
 
   const handleUpdateUser = async () => {
