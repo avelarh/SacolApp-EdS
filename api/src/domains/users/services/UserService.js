@@ -29,7 +29,7 @@ class UserService {
           name: body.name,
           email: body.email,
           password: body.password,
-          role: body.role,
+          role: 'user',
         };
         newUser.password = await this.encryptPassword(newUser.password);
         await User.create(newUser);

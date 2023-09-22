@@ -27,7 +27,7 @@ const Product = sequelize.define('Products', {
     },
 });
 
-Product.sync({alter: true, force: false})
+Product.sync({alter: false, force: false})
   .then(() => {
     console.log('Product table was (re)created');
   })
