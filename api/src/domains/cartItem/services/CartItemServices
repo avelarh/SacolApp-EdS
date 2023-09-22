@@ -1,0 +1,54 @@
+/*const CartItem = require('../models/CartItem');
+const QueryError = require('../../../../errors/QueryError');
+
+
+
+
+
+class CartItemService {
+    async create(body, user_id, product_id) {
+        const newCartItem = {
+            userId: user_id,
+            productId: product_id,
+            amount: body.amount
+        };
+        await CartItem.create(newCartItem);
+    }
+
+    async getAll(user_id) {
+        const cartItem = await CartItem.findAll({
+            where: {userId : user_id}
+        });
+        if (!cartItem) {
+            throw new QueryError('Não há nenhum produto no carrinho');
+        }
+        return cartItem;
+    }
+
+    async update(id, body) {
+        const cartItem = await CartItem.findByPk(id);
+        if (!cartItem) {
+            throw new QueryError(`Não há um produto no carrinho com o ID ${id}!`);
+        }
+        const newProduct = {
+            name: body.name,
+            price: body.price,
+            description: body.description,
+        };
+        await product.update(newProduct);
+    }
+
+    async delete(id) {
+        const product = await this.getById(id);
+        if (!product) {
+            throw new QueryError(`Não há um produto com o ID ${id}!`);
+        }
+        const key = product.image;
+        await product.destroy();
+        return key;
+    }
+}
+
+module.exports = new ProductService;*/
+
+//ATUALIZAÇÃO CART ITEM SERVICES
