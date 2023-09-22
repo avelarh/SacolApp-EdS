@@ -22,10 +22,14 @@ app.use(express.urlencoded({
 
 app.use(express.json());
 
+
 const usersRouter = require('../src/domains/users/controllers/index');
 app.use('/api/users', usersRouter);
 
 const productsRouter = require('../src/domains/products/controllers/index');
 app.use('/api/products', productsRouter);
+
+const errorHandler = require('../src/middlewares/error-handler');
+app.use(errorHandler);
 
 module.exports = app;
