@@ -25,30 +25,26 @@ class CartItemService {
         return cartItem;
     }
 
-    async update(id, body) {
+    async update(id, newAmount) {
         const cartItem = await CartItem.findByPk(id);
         if (!cartItem) {
             throw new QueryError(`Não há um produto no carrinho com o ID ${id}!`);
         }
-        const newProduct = {
-            name: body.name,
-            price: body.price,
-            description: body.description,
+        const newCartItem = {
+            amount: newAmount,
         };
-        await product.update(newProduct);
+        await CartItem.update(newCartItem);
     }
 
     async delete(id) {
-        const product = await this.getById(id);
-        if (!product) {
-            throw new QueryError(`Não há um produto com o ID ${id}!`);
+        const cartItem = await CartItem.findByPk(id);
+        if (!cartItem) {
+            throw new QueryError(`Não há um produto no carrinho com o ID ${id}!`);
         }
-        const key = product.image;
-        await product.destroy();
-        return key;
-    }
+        await cartItem.destroy();
+        return id;
 }
 
-module.exports = new ProductService;*/
+}
 
-//ATUALIZAÇÃO CART ITEM SERVICES
+module.exports = new CartItemService;*/
