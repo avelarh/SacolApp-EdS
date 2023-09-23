@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 
 import { RootStackParamList } from "../../services/routes";
@@ -9,6 +9,7 @@ import { BlueButton } from "../../components/BlueButton";
 import { TextField } from "../../components/TextField";
 import { Loading } from "../../components/Loading";
 import { MessageBalloon } from "../../components/MessageBalloon";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import {
   Container,
@@ -65,7 +66,7 @@ export default function Login({ navigation }: Props) {
       if (err.response.data.errors) {
         setModalMsg(err.response.data.errors[0].msg);
       } else {
-        console.log(err.response.data);
+        setModalMsg(err.response.data);
       }
 
       setIsLoading(false);
@@ -75,8 +76,8 @@ export default function Login({ navigation }: Props) {
 
   return (
     <Container>
+      <Image source={require("../../assets/logo.png")} style={styles.image} />
       <Title>Login</Title>
-
       <TextFieldWrapper>
         <TextField
           value={loginData.email}
@@ -100,6 +101,16 @@ export default function Login({ navigation }: Props) {
           textContentType="password"
           autoCorrect={false}
         />
+        <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.showPasswordButton}
+          >
+            <FontAwesome
+              name={showPassword ? "eye-slash" : "eye"}
+              size={22}
+              color="#24203B"
+            />
+          </TouchableOpacity>
       </TextFieldWrapper>
 
       <ButtonWrapper>
@@ -135,5 +146,16 @@ const styles = StyleSheet.create({
     width: 356,
     fontSize: 14.5,
     left: -1.5,
+  },
+  image: {
+    width: 250,
+    height: 250,
+    top: -40,
+  },
+  showPasswordButton: {
+    position: "absolute",
+    top: 0,
+    right: 15,
+    zIndex: 1,
   },
 });

@@ -25,9 +25,13 @@ import {
   ButtonWrapper,
   ScrollViewWrapper,
 } from "./styles";
-import { UserData } from "../../services/requests/User/CreateUser";
+
 import { logout } from "../../services/requests/User/Logout";
 import { useAuth } from "../../services/context/AuthContext";
+import { myAccount } from "../../services/requests/User/MyAccount";
+import { UserGetData } from "../../services/interfaces";
+import { editUser } from "../../services/requests/User/EditUser";
+import { deleteUser } from "../../services/requests/User/DeleteUser";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "Profile">;
 
@@ -59,63 +63,38 @@ export function Profile({ navigation }: Props) {
   const [modalMsg, setModalMsg] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
 
-  /* const { setIsSignedIn, setUser, user } = useAuth(); */
+  const [userData, setUserData] = useState<UserGetData>({
+    name: "",
+    email: "",
+    id: 0,
+    role: "",
+  });
+
+  const { setIsSignedIn } = useAuth();
 
   const getUserData = async () => {
-    /* try {
+    try {
       setIsLoading(true);
-      const data = await getUser();
+      const data = await myAccount();
       if (data) {
         setUserData(data);
-        setUserDataEdit(data);
       }
       setIsLoading(false);
     } catch (err: any) {
       setIsLoading(false);
-    } */
+    }
   };
 
   useEffect(() => {
     getUserData();
   }, []);
 
-  const updateDataEdit = (newState: any) => {
-    const filteredState = Object.keys(newState)
-      .filter((key) => userDataEdit.hasOwnProperty(key))
-      .reduce((obj: any, key) => {
-        obj[key] = newState[key];
-        return obj;
-      }, {});
-
-    setUserDataEdit({
-      ...userDataEdit,
-      ...filteredState,
-    });
-
-    setHasUpdate(true);
-  };
-
-  const [userDataEdit, setUserDataEdit] = useState<UserData>({
-    name: "",
-    cpf: "",
-    email: "",
-    cep: "",
-    street: "",
-    number: "",
-    neighborhood: "",
-    city: "",
-    state: "",
-    password: ""
-  });
-
-  const { setIsSignedIn } = useAuth();
-
   const handleLogout = async () => {
     try {
       setIsLoading(true);
       await logout();
-      setIsSignedIn(false);
       setIsLoading(false);
+      setIsSignedIn(false);
     } catch (err: any) {
       setIsLoading(false);
       setFailedLogout(true);
@@ -123,9 +102,9 @@ export function Profile({ navigation }: Props) {
   };
 
   const handleUpdateUser = async () => {
-    /* try {
+    try {
       setIsLoading(true);
-      await editUser(userDataEdit);
+      await editUser(userData.id, userData);
       setIsLoading(false);
       setHasUpdate(false);
     } catch (err: any) {
@@ -136,24 +115,17 @@ export function Profile({ navigation }: Props) {
       }
       setIsLoading(false);
       setError(true);
-    } */
+    }
   };
 
-  const searchCep = async (cep: string) => {
-    try {
-      const res = await apiCep.get(`${cep}/json/`);
-      updateDataEdit({
-        cep: res.data.cep,
-        street: res.data.logradouro,
-        neighborhood: res.data.bairro,
-        city: res.data.localidade,
-        state: res.data.uf,
-      });
-    } catch (err) {}
-  };
+  function updateUserData(newLoginData: Partial<UserGetData>) {
+    if (!userData) return;
+    setUserData({ ...userData, ...newLoginData });
+    setHasUpdate(true);
+  }
 
   const handleDeleteUser = async () => {
-    /* try {
+    try {
       setIsLoading(true);
       await deleteUser(userData.id!);
       await logout();
@@ -162,7 +134,7 @@ export function Profile({ navigation }: Props) {
     } catch (err: any) {
       setIsLoading(false);
       setFailedExclusion(true);
-    } */
+    }
   };
 
   function handleBack() {
@@ -193,63 +165,24 @@ export function Profile({ navigation }: Props) {
         <ScrollView>
           <FieldsContainer>
             <ProfileField
+              editable
               label="Nome"
-              value={userDataEdit.name!}
+              value={userData.name!}
               mask={inputMasks.onlyLetters}
               placeholder=""
               autoCapitalize="words"
               textContentType="name"
               autoComplete="name"
+              onChange={(text: string) => updateUserData({ name: text })}
             />
             <ProfileField
               editable
-              label="CEP"
-              value={userDataEdit.cep!}
-              onChange={(value: string) => {
-                updateDataEdit({ cep: value });
-                searchCep(value);
-              }}
+              label="Email"
+              value={userData.email!}
               placeholder=""
-              mask={inputMasks.cep}
-              textContentType="postalCode"
-              keyboardType="number-pad"
-              autoComplete="postal-code"
-              maxLength={9}
-            />
-            <ProfileField
-              editable
-              label="Estado"
-              value={userDataEdit.state!}
-              onChange={(value: string) => updateDataEdit({ state: value })}
-              mask={inputMasks.onlyLetters}
-              placeholder=""
-              textContentType="addressState"
-            />
-            <ProfileField
-              editable
-              label="Cidade"
-              placeholder=""
-              value={userDataEdit.city!}
-              onChange={(value: string) => updateDataEdit({ city: value })}
-              mask={inputMasks.onlyLetters}
-              textContentType="addressCity"
-            />
-            <ProfileField
-              editable
-              label="Rua"
-              placeholder=""
-              value={userDataEdit.street!}
-              onChange={(value: string) => updateDataEdit({ street: value })}
-              textContentType="addressCity"
-            />
-            <ProfileField
-              editable
-              label="Bairro"
-              value={userDataEdit.neighborhood!}
-              onChange={(value: string) =>
-                updateDataEdit({ neighborhood: value })
-              }
-              placeholder=""
+              autoCapitalize="words"
+              autoComplete="email"
+              onChange={(text: string) => updateUserData({ email: text })}
             />
             <LogoutField onPress={() => setConfirmLogout(true)} />
             <DeleteAccountField onPress={() => setConfirmExclusion(true)} />
