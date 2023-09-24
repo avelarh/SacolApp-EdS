@@ -11,6 +11,12 @@ export const Container = styled.View`
   background-color: #FAFAF7;
 `;
 
+export const Title = styled.Text`
+  font-size: ${RFValue(40)}px;
+  color: #14145A;
+  margin-bottom: ${RFValue(40)}px;
+`;
+
 export const SpaceAround = styled.View`
   display: flex;
   justify-content: space-around;
@@ -24,15 +30,6 @@ export const WarningText = styled.Text`
   font-size: 13px;
   width: ${wp("88%")}px;
   margin-top: ${RFValue(15)}px;
-`;
-
-export const Subtitle = styled.Text`
-  margin-top: ${RFValue(30)}px;
-  font-size: ${RFValue(14)}px;
-`;
-
-export const ButtonWrapper = styled.View`
-  margin-top: ${RFValue(40)}px;
 `;
 
 export const ContinueButtonWrapper = styled.View`

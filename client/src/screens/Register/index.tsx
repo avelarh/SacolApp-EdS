@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, Image } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 
-import { CreateUser, UserData } from "../../services/requests/User/CreateUser";
+import { CreateUser } from "../../services/requests/User/CreateUser";
 import { RootStackParamList } from "../../services/routes";
-import { apiCep } from "../../services/apiCep";
 
 import { TextField } from "../../components/TextField";
 import { BlueButton } from "../../components/BlueButton";
@@ -13,20 +12,17 @@ import { MessageBalloon } from "../../components/MessageBalloon";
 import { BackButton } from "../../components/BackButton";
 import { Loading } from "../../components/Loading";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { validateCPF } from "../../components/ValidaCpf";
 import { inputMasks } from "../../objects/objects";
 
 import {
   TextFieldWrapper,
   Container,
   WarningText,
-  Subtitle,
-  ButtonWrapper,
+  Title,
   SpaceAround,
   ContinueButtonWrapper,
 } from "./styles";
 import theme from "../../global/styles/theme";
-import { Title } from "../Login/styles";
 import { UserCreateData } from "../../services/interfaces";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "Register">;
@@ -68,20 +64,7 @@ export function Register({ navigation }: Props) {
     password: "",
   });
 
-  const searchCep = async (cep: string) => {
-    try {
-      const res = await apiCep.get(`${cep}/json/`);
-      updateRegisterData({
-        cep: res.data.cep,
-        street: res.data.logradouro,
-        neighborhood: res.data.bairro,
-        city: res.data.localidade,
-        state: res.data.uf,
-      });
-    } catch (err) {}
-  };
-
-  function updateRegisterData(newRegisterData: Partial<UserData>) {
+  function updateRegisterData(newRegisterData: Partial<UserCreateData>) {
     if (!registerData) return;
     setRegisterData({ ...registerData, ...newRegisterData });
   }
@@ -132,6 +115,7 @@ export function Register({ navigation }: Props) {
 
   return (
     <Container>
+      <Image source={require("../../assets/logo.png")} style={styles.image} />
       <BackButton
         onPress={() => {
           setNotSavedDataMsg(true);
@@ -278,5 +262,9 @@ const styles = StyleSheet.create({
     top: 0,
     right: 15,
     zIndex: 1,
+  },
+  image: {
+    width: 250,
+    height: 250,
   },
 });
