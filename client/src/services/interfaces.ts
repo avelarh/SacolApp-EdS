@@ -17,7 +17,16 @@ export interface UserGetData{
 }
 
 export interface Product{
+  id: string;
   name: string;
   price: number;
   description: string;
+}
+
+export interface ProductCart{
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  quantidade: string;
 }

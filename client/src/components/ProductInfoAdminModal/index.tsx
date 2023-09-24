@@ -25,9 +25,10 @@ import { addProduct } from "../../services/requests/Product/AddProduct";
 interface Props {
   onSave: () => void;
   setVisibility: Dispatch<SetStateAction<boolean>>;
+  id: string;
 }
 
-export function ProductModal({ setVisibility, onSave }: Props) {
+export function ProductInfoAdminModal({ setVisibility, onSave }: Props) {
   const [notSavedDataMsg, setNotSavedDataMsg] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -50,7 +51,7 @@ export function ProductModal({ setVisibility, onSave }: Props) {
     return false;
   }
 
-  async function handleCreateProduct() {
+  async function handleUpdateProduct() {
     if (IsThereEmptyField()) {
       setMessage(true);
       return;
@@ -142,7 +143,7 @@ export function ProductModal({ setVisibility, onSave }: Props) {
         />
 
         <ButtonWrapper>
-          <BlueButton action={handleCreateProduct} buttonText="Salvar" />
+          <BlueButton action={handleUpdateProduct} buttonText="Salvar" />
         </ButtonWrapper>
         {message && (
           <MessageBalloon

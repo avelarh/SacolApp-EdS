@@ -72,7 +72,7 @@ export const TextAreaWrapper = styled.View`
   height: 25%;
 `;
 
-export const TextArea = styled.Text`
+export const TextArea = styled.TextInput`
   background-color: #f0f0f0;
   width: 100%;
   height: 90%;
@@ -81,7 +81,7 @@ export const TextArea = styled.Text`
   padding-top: 5px;
 `;
 
-export const TextInput = styled.Text`
+export const TextInput = styled.TextInput`
   display: flex;
   flex-direction: row;
   border-bottom-width: 0.8px;
@@ -93,12 +93,4 @@ export const TextInput = styled.Text`
 export const ButtonWrapper = styled.View`
   margin-top: 20px;
   margin-bottom: 20px;
-  flex-direction: row;
-`;
-
-export const DeleteAreaIcon = styled.TouchableOpacity`
-  width: 18px;
-  height: 18px;
-  top: 28px;
-  left: 40px;
 `;

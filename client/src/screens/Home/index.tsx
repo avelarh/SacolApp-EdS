@@ -19,6 +19,9 @@ import {
   TitleWrapper,
   Title,
 } from "./styles";
+import { ProductInfoModal } from "../../components/ProductInfoModal";
+import { ProductInfoAdminModal } from "../../components/ProductInfoAdminModal";
+import { ProductCartAddModal } from "../../components/ProductCartAddModal";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "HomePage">;
 
@@ -42,7 +45,7 @@ export function HomePage({ navigation, route }: Props) {
 
   const [noProperties, setNoProperties] = useState<boolean>(false);
 
-  const [newRoomModal, setNewRoomModal] = useState<boolean>(false);
+  const [newRoomModal, setNewProductModal] = useState<boolean>(false);
 
   const [dropdownActive, setDropdownActive] = useState<boolean>(false);
 
@@ -60,6 +63,7 @@ export function HomePage({ navigation, route }: Props) {
 
   return (
     <Container>
+      <ProductCartAddModal></ProductCartAddModal>
       {dropdownActive && (
         <BackgroundDark
           activeOpacity={0.3}
@@ -77,7 +81,7 @@ export function HomePage({ navigation, route }: Props) {
         <Subtitle>Clique em um produto para editar</Subtitle>
         <AddItemWrapper>
           <AddNewListItem
-            onPress={() => setNewRoomModal(true)}
+            onPress={() => setNewProductModal(true)}
             text="Adicionar novo produto"
           />
         </AddItemWrapper>

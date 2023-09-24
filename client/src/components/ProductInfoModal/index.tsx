@@ -10,35 +10,40 @@ import {
   XTouchable,
   TextInput,
   XWrapper,
+  DeleteAreaIcon,
 } from "./styles";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Loading } from "../Loading";
 import { AntDesign } from "@expo/vector-icons";
 
 import { BlueButton } from "../BlueButton";
 import { MessageBalloon } from "../MessageBalloon";
-import { Product } from "../../services/interfaces";
+import { ProductCart } from "../../services/interfaces";
 import { SinapiField } from "../SinapiFIeld";
 import { addProduct } from "../../services/requests/Product/AddProduct";
+import { Image } from "react-native";
 
 interface Props {
   onSave: () => void;
   setVisibility: Dispatch<SetStateAction<boolean>>;
-  name: string;
+  id: string;
 }
 
-export function ProductInfoModal({ setVisibility, onSave, name }: Props) {
+export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
   const [notSavedDataMsg, setNotSavedDataMsg] = useState<boolean>(false);
+  const [confirmExclusion, setConfirmExclusion] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [product, setProduct] = useState<Product>({
+  const [product, setProduct] = useState<ProductCart>({
+    id: "",
     name: "",
     description: "",
     price: 0,
+    quantidade: "",
   });
 
-  function updateProduct(newProduct: Partial<Product>) {
+  function updateProduct(newProduct: Partial<ProductCart>) {
     if (!product) return;
     setProduct({ ...product, ...newProduct });
   }
@@ -50,7 +55,7 @@ export function ProductInfoModal({ setVisibility, onSave, name }: Props) {
     return false;
   }
 
-  async function handleCreateProduct() {
+  async function handleUpdateProduct() {
     if (IsThereEmptyField()) {
       setMessage(true);
       return;
@@ -65,6 +70,19 @@ export function ProductInfoModal({ setVisibility, onSave, name }: Props) {
       setIsLoading(false);
     }
   }
+
+  async function handleDelete() {
+    try {
+      setIsLoading(true);
+      /* await addProduct(product); */
+      onSave();
+      setVisibility(false);
+    } catch (err: any) {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -108,36 +126,45 @@ export function ProductInfoModal({ setVisibility, onSave, name }: Props) {
 
         <InputTextWrapper>
           <Title>Nome</Title>
-          <TextInput
-            placeholder="Digite o nome do produto"
-            value={product.name}
-          />
+          <TextInput>{product.name}</TextInput>
         </InputTextWrapper>
 
         <TextAreaWrapper>
           <Row>
             <Title>Descrição</Title>
           </Row>
-          <TextArea
-            value={product.description}
-            placeholder="Digite a descrição do produto"
-            multiline={true}
-            style={{ textAlignVertical: "top" }}
-          />
+          <TextArea style={{ textAlignVertical: "top" }}></TextArea>
         </TextAreaWrapper>
 
         <SinapiField
           smallFont
           placeholder="R$00,00"
           label="Preço unitário"
-          value={product.price.toString()}
+          value={"R$" + product.price.toString()}
           onChange={(text: any) => {
             updateProduct({ price: text });
           }}
         />
 
+        <SinapiField
+          smallFont
+          editable
+          placeholder="0"
+          label="Quantidade"
+          value={product.quantidade}
+          onChange={(text: any) => {
+            updateProduct({ quantidade: text });
+          }}
+        />
+
         <ButtonWrapper>
-          <BlueButton action={handleCreateProduct} buttonText="Salvar" />
+          <BlueButton action={handleUpdateProduct} buttonText="Salvar" />
+          <DeleteAreaIcon onPress={() => setConfirmExclusion(true)}>
+            <Image
+              style={{ width: 24, height: 24 }}
+              source={require("../../assets/delete-icon.png")}
+            />
+          </DeleteAreaIcon>
         </ButtonWrapper>
         {message && (
           <MessageBalloon
@@ -149,6 +176,20 @@ export function ProductInfoModal({ setVisibility, onSave, name }: Props) {
           />
         )}
       </Container>
+      {confirmExclusion && (
+        <MessageBalloon
+          hasGoBackButton
+          title="Atenção!"
+          text="Tem certeza que deseja excluir esse item?"
+          handleConfirmButton={() => {
+            handleDelete();
+            setConfirmExclusion(false);
+          }}
+          handleCancelButton={() => {
+            setConfirmExclusion(false);
+          }}
+        />
+      )}
     </>
   );
 }

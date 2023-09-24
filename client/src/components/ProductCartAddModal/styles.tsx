@@ -61,7 +61,7 @@ export const XTouchable = styled.TouchableOpacity`
   margin-right: 3px;
 `;
 
-export const InputTextWrapper = styled.View`
+export const InputTextWrapper = styled.TouchableOpacity`
   margin-bottom: 30px;
   width: 90%;
 `;
@@ -93,12 +93,4 @@ export const TextInput = styled.Text`
 export const ButtonWrapper = styled.View`
   margin-top: 20px;
   margin-bottom: 20px;
-  flex-direction: row;
-`;
-
-export const DeleteAreaIcon = styled.TouchableOpacity`
-  width: 18px;
-  height: 18px;
-  top: 28px;
-  left: 40px;
 `;

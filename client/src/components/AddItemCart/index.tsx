@@ -15,7 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Loading } from "../Loading";
 import { AntDesign } from "@expo/vector-icons";
-import { Image } from "react-native";
+
 import { BlueButton } from "../BlueButton";
 import { MessageBalloon } from "../MessageBalloon";
 import { Product } from "../../services/interfaces";
@@ -25,9 +25,10 @@ import { addProduct } from "../../services/requests/Product/AddProduct";
 interface Props {
   onSave: () => void;
   setVisibility: Dispatch<SetStateAction<boolean>>;
+  name: string;
 }
 
-export function ProductModal({ setVisibility, onSave }: Props) {
+export function ProductInfoModal({ setVisibility, onSave, name }: Props) {
   const [notSavedDataMsg, setNotSavedDataMsg] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -108,30 +109,17 @@ export function ProductModal({ setVisibility, onSave }: Props) {
 
         <InputTextWrapper>
           <Title>Nome</Title>
-          <TextInput
-            placeholder="Digite o nome do produto"
-            value={product.name}
-            onChangeText={(value: string) => updateProduct({ name: value })}
-          />
+          <TextInput>{product.name}</TextInput>
         </InputTextWrapper>
 
         <TextAreaWrapper>
           <Row>
             <Title>Descrição</Title>
           </Row>
-          <TextArea
-            value={product.description}
-            placeholder="Digite a descrição do produto"
-            onChangeText={(value: string) =>
-              updateProduct({ description: value })
-            }
-            multiline={true}
-            style={{ textAlignVertical: "top" }}
-          />
+          <TextArea style={{ textAlignVertical: "top" }}></TextArea>
         </TextAreaWrapper>
 
         <SinapiField
-          editable
           smallFont
           placeholder="R$00,00"
           label="Preço unitário"

@@ -15,30 +15,35 @@ import { LinearGradient } from "expo-linear-gradient";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { Loading } from "../Loading";
 import { AntDesign } from "@expo/vector-icons";
-import { Image } from "react-native";
+
 import { BlueButton } from "../BlueButton";
 import { MessageBalloon } from "../MessageBalloon";
-import { Product } from "../../services/interfaces";
+import { Product, ProductCart } from "../../services/interfaces";
 import { SinapiField } from "../SinapiFIeld";
 import { addProduct } from "../../services/requests/Product/AddProduct";
+import { Dropdown } from "../Dropdown";
 
 interface Props {
   onSave: () => void;
   setVisibility: Dispatch<SetStateAction<boolean>>;
+  id: string;
 }
 
-export function ProductModal({ setVisibility, onSave }: Props) {
+export function ProductCartAddModal({ setVisibility, onSave }: Props) {
   const [notSavedDataMsg, setNotSavedDataMsg] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [product, setProduct] = useState<Product>({
+  const [product, setProduct] = useState<ProductCart>({
     id: "",
     name: "",
     description: "",
     price: 0,
+    quantidade:"",
   });
 
-  function updateProduct(newProduct: Partial<Product>) {
+  const [productId, setProductId] = useState<string>("");
+
+  function updateProduct(newProduct: Partial<ProductCart>) {
     if (!product) return;
     setProduct({ ...product, ...newProduct });
   }
@@ -50,7 +55,7 @@ export function ProductModal({ setVisibility, onSave }: Props) {
     return false;
   }
 
-  async function handleCreateProduct() {
+  async function handleAddProduct() {
     if (IsThereEmptyField()) {
       setMessage(true);
       return;
@@ -107,31 +112,19 @@ export function ProductModal({ setVisibility, onSave }: Props) {
         </XWrapper>
 
         <InputTextWrapper>
-          <Title>Nome</Title>
-          <TextInput
-            placeholder="Digite o nome do produto"
-            value={product.name}
-            onChangeText={(value: string) => updateProduct({ name: value })}
-          />
+          <Dropdown placeholder="Selecione um produto" width="80"></Dropdown>
         </InputTextWrapper>
 
         <TextAreaWrapper>
           <Row>
             <Title>Descrição</Title>
           </Row>
-          <TextArea
-            value={product.description}
-            placeholder="Digite a descrição do produto"
-            onChangeText={(value: string) =>
-              updateProduct({ description: value })
-            }
-            multiline={true}
-            style={{ textAlignVertical: "top" }}
-          />
+          <TextArea style={{ textAlignVertical: "top" }}>
+            {product.description}
+          </TextArea>
         </TextAreaWrapper>
 
         <SinapiField
-          editable
           smallFont
           placeholder="R$00,00"
           label="Preço unitário"
@@ -141,8 +134,19 @@ export function ProductModal({ setVisibility, onSave }: Props) {
           }}
         />
 
+        <SinapiField
+          smallFont
+          editable
+          placeholder="0"
+          label="Quantidade"
+          value={product.quantidade}
+          onChange={(text: any) => {
+            updateProduct({ quantidade: text });
+          }}
+        />
+
         <ButtonWrapper>
-          <BlueButton action={handleCreateProduct} buttonText="Salvar" />
+          <BlueButton action={handleAddProduct} buttonText="Salvar" />
         </ButtonWrapper>
         {message && (
           <MessageBalloon

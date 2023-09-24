@@ -33,6 +33,7 @@ export function Routes() {
       try {
         setIsLoading(true);
         const userData = await myAccount();
+        console.log(userData);
         if (!userData) {
           setIsSignedIn(false);
         } else {
