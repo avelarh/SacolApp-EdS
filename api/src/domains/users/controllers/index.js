@@ -87,7 +87,7 @@ router.delete('/:id',
   checkRole(["admin"]),
   async (req, res, next) => {
     try {
-      await UserService.delete(req.params.id, req.user.id);
+      await UserService.delete(req.params.id);
       res.status(statusCodes.NO_CONTENT).end();
     } catch (error) {
       next(error);
