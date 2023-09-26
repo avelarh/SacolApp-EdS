@@ -9,8 +9,7 @@ router.post('/',
     async (req, res, next) => {
         try {
             const user_id = req.user.id;
-            const product_id = req.body.productId;
-            await CartItemService.create(req.body, user_id, product_id);
+            await CartItemService.create(req.body, user_id);
             res.status(statusCodes.CREATED).end();
         } catch (error) {
             next(error);
@@ -38,7 +37,7 @@ router.put('/:id',
     async (req, res, next) => {
         try {
             const cartItem = await CartItemService.update(req.params.id, req.body.amount);
-            res.status(statusCodes.SUCCESS).json(cartItem);
+            res.status(statusCodes.NO_CONTENT).end();
         } catch(error){
             next(error);
         }
@@ -51,7 +50,7 @@ router.delete('/:id',
     async (req, res, next) => {
         try {
             const cartItem = await CartItemService.delete(req.params.id);
-            res.status(statusCodes.SUCCESS).json(cartItem);
+            res.status(statusCodes.NO_CONTENT).end();
         } catch(error){
             next(error);
         }

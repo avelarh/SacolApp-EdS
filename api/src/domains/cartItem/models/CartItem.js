@@ -14,18 +14,24 @@ const CartItem = sequelize.define('CartItem', {
     amount: {
         type: DataTypes.INTEGER,
         allowNull: false,
-
     },
-    
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    productId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    }
 });
 
-User.hasMany(CartItem);
+//User.hasMany(CartItem);
 
 CartItem.belongsTo(User, {
     foreignKey: "userId"
 });
 
-Product.hasMany(CartItem);
+//Product.hasMany(CartItem);
 
 CartItem.belongsTo(Product, {
     foreignKey: "productId"
