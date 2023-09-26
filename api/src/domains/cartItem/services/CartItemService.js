@@ -1,23 +1,33 @@
-/*const CartItem = require('../models/CartItem');
+const CartItem = require('../models/CartItem');
 const QueryError = require('../../../../errors/QueryError');
+const Product = require('../../products/models/Product');
 
 
 
 
 
 class CartItemService {
-    async create(body, user_id, product_id) {
+    async create(body, userId) {
         const newCartItem = {
-            userId: user_id,
-            productId: product_id,
+            userId: userId,
+            productId: body.productId,
             amount: body.amount
         };
         await CartItem.create(newCartItem);
     }
 
-    async getAll(user_id) {
+    async getAll(userId) {
         const cartItem = await CartItem.findAll({
-            where: {userId : user_id}
+            where: {userId : userId},
+            include: { 
+                model: Product,
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt'],
+                }
+            },
+            attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+            }
         });
         if (!cartItem) {
             throw new QueryError('Não há nenhum produto no carrinho');
@@ -33,7 +43,7 @@ class CartItemService {
         const newCartItem = {
             amount: newAmount,
         };
-        await CartItem.update(newCartItem);
+        await cartItem.update(newCartItem);
     }
 
     async delete(id) {
@@ -43,8 +53,8 @@ class CartItemService {
         }
         await cartItem.destroy();
         return id;
-}
+    }
 
 }
 
-module.exports = new CartItemService;*/
+module.exports = new CartItemService;

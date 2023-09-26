@@ -1,48 +1,60 @@
-/*const CartItemService = require('../services/CartItemService.js');
+const CartItemService = require('../services/CartItemService.js');
 const statusCodes = require('../../../../utils/constants/statusCodes');
+const {verifyJWT, checkRole} = require('../../../middlewares/auth-middlewares');
+const router = require('express').Router();
 
-class CartItemController {
-    async createCartItem(req, res, next) {
+router.post('/',
+    verifyJWT,
+    checkRole(['admin', 'user']),
+    async (req, res, next) => {
         try {
-            const { userId, productId, amount } = req.body;
-            await CartItemService.create({ userId, productId, amount });
+            const user_id = req.user.id;
+            await CartItemService.create(req.body, user_id);
             res.status(statusCodes.CREATED).end();
         } catch (error) {
             next(error);
         }
-    }
+    },
+);
 
-    async getAllCartItems(req, res, next) {
+router.get('/',
+    verifyJWT,
+    checkRole(['admin', 'user']),
+    async (req, res, next) => {
         try {
-            const { userId } = req.params;
-            const cartItems = await CartItemService.getAll(userId);
-            res.status(statusCodes.SUCCESS).json(cartItems);
-        } catch (error) {
+            const user_id = req.user.id;
+            const cartItem = await CartItemService.getAll(user_id);
+            res.status(statusCodes.SUCCESS).json(cartItem);
+        } catch(error){
             next(error);
         }
-    }
+    },
+);
 
-    async updateCartItem(req, res, next) {
+router.put('/:id',
+    verifyJWT,
+    checkRole(['admin', 'user']),
+    async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const { amount } = req.body;
-            await CartItemService.update(id, amount);
+            const cartItem = await CartItemService.update(req.params.id, req.body.amount);
             res.status(statusCodes.NO_CONTENT).end();
-        } catch (error) {
+        } catch(error){
             next(error);
         }
-    }
+    },
+);
 
-    async deleteCartItem(req, res, next) {
+router.delete('/:id',
+    verifyJWT,
+    checkRole(['admin', 'user']),
+    async (req, res, next) => {
         try {
-            const { id } = req.params;
-            await CartItemService.delete(id);
+            const cartItem = await CartItemService.delete(req.params.id);
             res.status(statusCodes.NO_CONTENT).end();
-        } catch (error) {
+        } catch(error){
             next(error);
         }
-    }
-}
+    },
+);
 
-module.exports = new CartItemController();
-*/
+module.exports = router;

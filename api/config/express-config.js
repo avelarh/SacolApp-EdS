@@ -29,6 +29,9 @@ app.use('/api/users', usersRouter);
 const productsRouter = require('../src/domains/products/controllers/index');
 app.use('/api/products', productsRouter);
 
+const cartItemsRouter = require('../src/domains/cartItem/controllers/index');
+app.use('/api/cart', cartItemsRouter);
+
 const errorHandler = require('../src/middlewares/error-handler');
 app.use(errorHandler);
 

@@ -21,10 +21,10 @@ const Product = sequelize.define('Products', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    image: {
+  /*   image: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
+    }, */
 });
 
 Product.sync({alter: false, force: false})
