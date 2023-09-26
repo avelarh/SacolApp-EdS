@@ -21,13 +21,13 @@ const Product = sequelize.define('Products', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    image: {
+  /*   image: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
+    }, */
 });
 
-Product.sync({alter: false, force: false})
+Product.sync({alter: true, force: false})
   .then(() => {
     console.log('Product table was (re)created');
   })

@@ -13,14 +13,14 @@ const path = require('path');
 router.post('/',
     verifyJWT,  
     checkRole(['admin']),
-    multer(multerConfig).single('image'),
+    //multer(multerConfig).single('image'),
     async (req, res, next) => {
         try {
             const product = {
                 name: req.body.name,
                 price: req.body.price,
                 description: req.body.description,
-                image: req.file.filename,
+                //image: req.file.filename,
             }
             await ProductService.create(product);
             res.status(statusCodes.CREATED).end();

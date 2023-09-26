@@ -10,14 +10,16 @@ class ProductService {
             name: body.name,
             price: body.price,
             description: body.description,
-            image: body.image,
+            //image: body.image,
         };
         await Product.create(newProduct);
     }
 
     async getAll() {
         const products = await Product.findAll({
-            attributes: ['id', 'name', 'price', 'description', 'image'],
+            attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+            }
         });
         if (!products) {
             throw new QueryError('Não há nenhum produto cadastrado');
