@@ -1,4 +1,4 @@
-/*const CartItem = require('../models/CartItem');
+const CartItem = require('../models/CartItem');
 const QueryError = require('../../../../errors/QueryError');
 
 
@@ -47,4 +47,4 @@ class CartItemService {
 
 }
 
-module.exports = new CartItemService;*/
+module.exports = new CartItemService;
