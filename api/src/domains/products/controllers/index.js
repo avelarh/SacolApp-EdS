@@ -75,9 +75,9 @@ router.delete('/:id',
     async (req, res, next) => {
         try {
             const key = await ProductService.delete(req.params.id);
-            util.promisify(fs.unlink)(
+/*             util.promisify(fs.unlink)(
                 path.resolve(__dirname, '..', 'images', key)
-            );
+            ); */
             res.status(statusCodes.NO_CONTENT).end();
         } catch(error){
             next(error);
