@@ -12,12 +12,11 @@ export const BackgroundDark = styled.TouchableOpacity`
 
 export const Container = styled.View`
   width: 88%;
-  height: 60%;
+  height: 75%;
   background-color: #FAFAF7;
   z-index: 3;
   position: absolute;
-  top: 20%;
-  display: flex;
+  top: 15%;
   align-items: center;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
@@ -69,7 +68,7 @@ export const InputTextWrapper = styled.View`
 export const TextAreaWrapper = styled.View`
   margin-bottom: 30px;
   width: 90%;
-  height: 25%;
+  height: 18%;
 `;
 
 export const TextArea = styled.Text`

@@ -12,11 +12,11 @@ export const BackgroundDark = styled.TouchableOpacity`
 
 export const Container = styled.View`
   width: 88%;
-  height: 70%;
+  height: 77%;
   background-color: #FAFAF7;
   z-index: 3;
   position: absolute;
-  top: 20%;
+  top: 13%;
   display: flex;
   align-items: center;
   border-top-right-radius: 8px;

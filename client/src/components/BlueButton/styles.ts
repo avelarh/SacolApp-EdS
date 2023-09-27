@@ -16,3 +16,19 @@ export const ButtonText = styled.Text`
   font-size: ${RFValue(14)}px;
   color: #FFFFFF;
 `;
+
+export const ButtonContainerBig = styled.TouchableOpacity`
+  height: ${RFValue(50)}px;
+  width: ${RFValue(160)}px;
+  margin: auto;
+  margin-top: ${RFValue(15)}px;
+  margin-bottom: ${RFValue(15)}px;
+  border-radius: 30px;
+  background: #14145A;
+`;
+
+export const ButtonTextBig = styled.Text`
+  margin: auto;
+  font-size: ${RFValue(18)}px;
+  color: #FFFFFF;
+`;

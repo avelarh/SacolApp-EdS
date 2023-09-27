@@ -24,9 +24,8 @@ export interface Product {
 }
 
 export interface ProductCart  {
+  Product: Product;
   productId: number;
   amount: number;
-  name: string;
-  price: number;
-  description: string;
+  id: number;
 }

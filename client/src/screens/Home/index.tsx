@@ -25,6 +25,7 @@ import { ProductCartAddModal } from "../../components/ProductCartAddModal";
 import { Product, ProductCart } from "../../services/interfaces";
 import { productListCart } from "../../services/requests/Cart/ListProductsCart";
 import { productList } from "../../services/requests/Product/ProductList";
+import { BlueButton } from "../../components/BlueButton";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "HomePage">;
 
@@ -94,6 +95,14 @@ export function HomePage({ navigation, route }: Props) {
         />
       )}
 
+      {productInfo && (
+        <ProductInfoModal
+          setVisibility={setProductInfo}
+          onSave={() => getProducts()}
+          id={idChoice}
+        />
+      )}
+
       {dropdownActive && (
         <BackgroundDark
           activeOpacity={0.3}
@@ -123,15 +132,17 @@ export function HomePage({ navigation, route }: Props) {
           data={data}
           renderItem={({ item }: ListRenderItemInfo<ProductCart>) => (
             <ListItem
-              title={item.amount}
-              date={item.productId.toString()}
+              amount
+              title={item.Product.name}
+              date={item.amount.toString()}
               onPress={() => {
-                setIdChoice(item.productId);
+                setIdChoice(item.id);
                 setProductInfo(true);
               }}
             />
           )}
         />
+        <BlueButton big action={() => {}} buttonText="Realizar Compra" />
       </>
     </Container>
   );

@@ -23,33 +23,41 @@ import { ProductCart } from "../../services/interfaces";
 import { SinapiField } from "../SinapiFIeld";
 import { addProduct } from "../../services/requests/Product/AddProduct";
 import { Image } from "react-native";
+import { getProductCart } from "../../services/requests/Cart/GetProductCart";
+import { updateProductCart } from "../../services/requests/Cart/UpdateProductCart";
+import { deleteProductCart } from "../../services/requests/Cart/DeleteProductCart";
 
 interface Props {
   onSave: () => void;
   setVisibility: Dispatch<SetStateAction<boolean>>;
-  id: string;
+  id: number;
 }
 
 export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
   const [notSavedDataMsg, setNotSavedDataMsg] = useState<boolean>(false);
   const [confirmExclusion, setConfirmExclusion] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
+  const [hasUpdate, setHasUpdate] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [product, setProduct] = useState<ProductCart>({
-    id: "",
-    name: "",
-    description: "",
-    price: 0,
-    quantidade: "",
+    productId: 0,
+    amount: 0,
+    id: 0,
+    Product: { description: "", id: 0, name: "", price: 0 },
   });
 
   function updateProduct(newProduct: Partial<ProductCart>) {
     if (!product) return;
     setProduct({ ...product, ...newProduct });
+    setHasUpdate(true);
   }
 
   function IsThereEmptyField() {
-    if (product.name == "" || product.description == "" || product.price == 0) {
+    if (
+      product.Product.name == "" ||
+      product.Product.description == "" ||
+      product.Product.price == 0
+    ) {
       return true;
     }
     return false;
@@ -63,11 +71,10 @@ export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
 
     try {
       setIsLoading(true);
-      await addProduct(product);
+      const data = await updateProductCart(id, product);
       onSave();
       setVisibility(false);
     } catch (err: any) {
-      
       setIsLoading(false);
     }
   }
@@ -75,7 +82,7 @@ export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
   async function handleDelete() {
     try {
       setIsLoading(true);
-      /* await addProduct(product); */
+      await deleteProductCart(id);
       onSave();
       setVisibility(false);
     } catch (err: any) {
@@ -83,7 +90,27 @@ export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
     }
   }
 
-  useEffect(() => {}, []);
+  async function getInfo() {
+    try {
+      setIsLoading(true);
+      const data = await getProductCart(id);
+      if (data) {
+        setProduct(data.cartItem);
+      }
+      setIsLoading(false);
+    } catch (err: any) {
+      if (err.response.data.errors) {
+        console.log(err.response.data.errors[0].msg);
+      } else {
+        console.log(err.response.data);
+      }
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getInfo();
+  }, []);
 
   return (
     <>
@@ -127,24 +154,26 @@ export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
 
         <InputTextWrapper>
           <Title>Nome</Title>
-          <TextInput>{product.name}</TextInput>
+          <TextInput>{product.Product.name}</TextInput>
         </InputTextWrapper>
 
         <TextAreaWrapper>
           <Row>
             <Title>Descrição</Title>
           </Row>
-          <TextArea style={{ textAlignVertical: "top" }}></TextArea>
+          <TextArea style={{ textAlignVertical: "top" }}>
+            {product.Product.description}
+          </TextArea>
         </TextAreaWrapper>
 
         <SinapiField
           smallFont
           placeholder="R$00,00"
           label="Preço unitário"
-          value={"R$" + product.price.toString()}
-          onChange={(text: any) => {
-            updateProduct({ price: text });
-          }}
+          value={"R$" + product.Product.price.toString()}
+          /* onChange={(text: any) => {
+            updateProduct({ Product: text });
+          }} */
         />
 
         <SinapiField
@@ -152,31 +181,42 @@ export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
           editable
           placeholder="0"
           label="Quantidade"
-          value={product.quantidade}
+          value={product.amount.toString()}
           onChange={(text: any) => {
-            updateProduct({ quantidade: text });
+            updateProduct({ amount: text });
           }}
         />
 
-        <ButtonWrapper>
-          <BlueButton action={handleUpdateProduct} buttonText="Salvar" />
-          <DeleteAreaIcon onPress={() => setConfirmExclusion(true)}>
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../../assets/delete-icon.png")}
-            />
-          </DeleteAreaIcon>
-        </ButtonWrapper>
-        {message && (
-          <MessageBalloon
-            title="Atenção"
-            text="Você precisa preencher todos campos!"
-            handleConfirmButton={() => {
-              setMessage(false);
-            }}
-          />
-        )}
+        <SinapiField
+          smallFont
+          placeholder="R$00,00"
+          label="Total"
+          value={"R$" + (product.Product.price * product.amount).toString()}
+          /* onChange={(text: any) => {
+            updateProduct({ Product: text });
+          }} */
+        />
+
+        
+          <ButtonWrapper>
+            <BlueButton action={handleUpdateProduct} buttonText="Salvar" />
+            <DeleteAreaIcon onPress={() => setConfirmExclusion(true)}>
+              <Image
+                style={{ width: 24, height: 24 }}
+                source={require("../../assets/delete-icon.png")}
+              />
+            </DeleteAreaIcon>
+          </ButtonWrapper>
       </Container>
+      {message && (
+        <MessageBalloon
+          title="Atenção"
+          text="Você precisa preencher todos campos!"
+          handleConfirmButton={() => {
+            setMessage(false);
+          }}
+        />
+      )}
       {confirmExclusion && (
         <MessageBalloon
           hasGoBackButton
