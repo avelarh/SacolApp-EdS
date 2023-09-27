@@ -17,7 +17,7 @@ import { Product } from "../../services/interfaces";
 interface DropdownProps {
   placeholder: string;
   items: Product[];
-  setData: (item: string) => void;
+  setData: (item: number) => void;
   width?: string;
   required?: boolean;
   search?: boolean;
@@ -48,7 +48,7 @@ export function Dropdown({
             }
             data={items}
             onSelect={(selectedItem, index) => {
-              setData(selectedItem.id);
+              setData(selectedItem.id.toString());
               setWasSelected(true);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {
@@ -93,7 +93,7 @@ export function Dropdown({
             }
             data={items}
             onSelect={(selectedItem, index) => {
-              setData(selectedItem.id);
+              setData(selectedItem.id.toString());
               setWasSelected(true);
             }}
             buttonTextAfterSelection={(selectedItem, index) => {

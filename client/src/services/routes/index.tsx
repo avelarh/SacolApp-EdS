@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { Loading } from "../../components/Loading";
 import { myAccount } from "../requests/User/MyAccount";
 
-
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
@@ -33,7 +32,6 @@ export function Routes() {
       try {
         setIsLoading(true);
         const userData = await myAccount();
-        console.log(userData);
         if (!userData) {
           setIsSignedIn(false);
         } else {

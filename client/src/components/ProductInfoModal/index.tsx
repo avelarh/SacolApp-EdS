@@ -67,6 +67,7 @@ export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
       onSave();
       setVisibility(false);
     } catch (err: any) {
+      
       setIsLoading(false);
     }
   }

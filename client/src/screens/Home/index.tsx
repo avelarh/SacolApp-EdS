@@ -22,6 +22,9 @@ import {
 import { ProductInfoModal } from "../../components/ProductInfoModal";
 import { ProductInfoAdminModal } from "../../components/ProductInfoAdminModal";
 import { ProductCartAddModal } from "../../components/ProductCartAddModal";
+import { Product, ProductCart } from "../../services/interfaces";
+import { productListCart } from "../../services/requests/Cart/ListProductsCart";
+import { productList } from "../../services/requests/Product/ProductList";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "HomePage">;
 
@@ -35,35 +38,62 @@ type Props = {
   route: ScreenRouteProp;
 };
 
-interface FilterType {
-  label: string;
-  value: string;
-}
-
 export function HomePage({ navigation, route }: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [noProperties, setNoProperties] = useState<boolean>(false);
+  const [newProductModal, setNewProductModal] = useState<boolean>(false);
+  const [productInfo, setProductInfo] = useState<boolean>(false);
 
-  const [newRoomModal, setNewProductModal] = useState<boolean>(false);
+  const [data, setData] = useState<ProductCart[]>([]);
+  const [storage, setStorage] = useState<Product[]>([]);
 
   const [dropdownActive, setDropdownActive] = useState<boolean>(false);
 
-  const [selectedFilter, setSelectedFilter] = useState<string>("Nenhum");
+  const [idChoice, setIdChoice] = useState<number>(0);
 
-  const getProperties = async (filter: string) => {
+  const getProducts = async () => {
     try {
       setIsLoading(true);
-
+      const data = await productListCart();
+      console.log(data);
+      if (data) {
+        setData(data);
+      }
       setIsLoading(false);
     } catch (err: any) {
       setIsLoading(false);
     }
   };
 
+  const getProductsStore = async () => {
+    try {
+      setIsLoading(true);
+      const data = await productList();
+      if (data) {
+        setStorage(data);
+      }
+      setIsLoading(false);
+    } catch (err: any) {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+    getProductsStore();
+  }, []);
+
   return (
     <Container>
-      <ProductCartAddModal></ProductCartAddModal>
+      {newProductModal && (
+        <ProductCartAddModal
+          products={storage}
+          setVisibility={setNewProductModal}
+          onSave={() => getProducts()}
+          id={idChoice}
+        />
+      )}
+
       {dropdownActive && (
         <BackgroundDark
           activeOpacity={0.3}
@@ -88,36 +118,20 @@ export function HomePage({ navigation, route }: Props) {
         <>
           <ListHeader leftText="Produtos do carrinho" />
         </>
-        {/* <FlatList
-            style={{ marginBottom: 20 }}
-            data={properties}
-            renderItem={({ item }: ListRenderItemInfo<PropertyDataGet>) =>
-              user?.role != "admin" ? (
-                <ListItem
-                  type={"withArrow"}
-                  title={item.ownerName}
-                  date={convertDate(item.createdAt)}
-                  onPress={() => {
-                    navigation.navigate("PropertyOptions", {
-                      propertyID: item.id,
-                    } as any);
-                  }}
-                />
-              ) : (
-                <ListItem
-                  type={"withArrow"}
-                  title={item.ownerName}
-                  date={convertDate(item.createdAt)}
-                  onPress={() => {
-                    navigation.navigate("PropertyOptions", {
-                      propertyID: item.id,
-                    } as any);
-                  }}
-                />
-              )
-            }
-            keyExtractor={(item: PropertyDataGet) => item.id.toString()}
-          /> */}
+        <FlatList
+          style={{ marginBottom: 20 }}
+          data={data}
+          renderItem={({ item }: ListRenderItemInfo<ProductCart>) => (
+            <ListItem
+              title={item.amount}
+              date={item.productId.toString()}
+              onPress={() => {
+                setIdChoice(item.productId);
+                setProductInfo(true);
+              }}
+            />
+          )}
+        />
       </>
     </Container>
   );

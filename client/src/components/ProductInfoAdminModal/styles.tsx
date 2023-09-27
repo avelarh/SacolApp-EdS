@@ -93,4 +93,5 @@ export const TextInput = styled.TextInput`
 export const ButtonWrapper = styled.View`
   margin-top: 20px;
   margin-bottom: 20px;
+  flex-direction: row;
 `;

@@ -25,7 +25,7 @@ export function ListItem({ title, status, date, onPress, subtitle }: ListItem) {
       <Row>
         <View>
           <Title>{limitarTexto(title, 17)}</Title>
-          <Subtitle>Data: {date}</Subtitle>
+          <Subtitle>id: {date}</Subtitle>
         </View>
         <Entypo name="chevron-small-right" size={26} color="#3C3C4380" />
       </Row>

@@ -12,7 +12,7 @@ import {
   XWrapper,
 } from "./styles";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Loading } from "../Loading";
 import { AntDesign } from "@expo/vector-icons";
 import { Image } from "react-native";
@@ -21,19 +21,25 @@ import { MessageBalloon } from "../MessageBalloon";
 import { Product } from "../../services/interfaces";
 import { SinapiField } from "../SinapiFIeld";
 import { addProduct } from "../../services/requests/Product/AddProduct";
+import { getProduct } from "../../services/requests/Product/GetProduct";
+import { DeleteAreaIcon } from "../ProductInfoModal/styles";
+import { deleteProduct } from "../../services/requests/Product/DeleteProduct";
+import { updateProductApi } from "../../services/requests/Product/UpdateProduct";
 
 interface Props {
   onSave: () => void;
   setVisibility: Dispatch<SetStateAction<boolean>>;
-  id: string;
+  id: number;
 }
 
-export function ProductInfoAdminModal({ setVisibility, onSave }: Props) {
+export function ProductInfoAdminModal({ setVisibility, onSave, id }: Props) {
   const [notSavedDataMsg, setNotSavedDataMsg] = useState<boolean>(false);
+  const [confirmExclusion, setConfirmExclusion] = useState<boolean>(false);
+  const [hasUpdate, setHasUpdate] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [product, setProduct] = useState<Product>({
-    id: "",
+    id: 0,
     name: "",
     description: "",
     price: 0,
@@ -42,30 +48,51 @@ export function ProductInfoAdminModal({ setVisibility, onSave }: Props) {
   function updateProduct(newProduct: Partial<Product>) {
     if (!product) return;
     setProduct({ ...product, ...newProduct });
-  }
-
-  function IsThereEmptyField() {
-    if (product.name == "" || product.description == "" || product.price == 0) {
-      return true;
-    }
-    return false;
+    setHasUpdate(true);
   }
 
   async function handleUpdateProduct() {
-    if (IsThereEmptyField()) {
+    if (!hasUpdate) {
       setMessage(true);
       return;
     }
 
     try {
       setIsLoading(true);
-      await addProduct(product);
+      await updateProductApi(product, id);
       onSave();
       setVisibility(false);
     } catch (err: any) {
       setIsLoading(false);
     }
   }
+
+  async function handleDelete() {
+    try {
+      setIsLoading(true);
+      await deleteProduct(id);
+      setVisibility(false);
+    } catch (err: any) {
+      setIsLoading(false);
+    }
+  }
+
+  async function getProductInfo() {
+    try {
+      setIsLoading(true);
+      const data = await getProduct(id);
+      if (data) {
+        setProduct(data);
+      }
+      setIsLoading(false);
+    } catch (err: any) {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getProductInfo();
+  }, []);
 
   return (
     <>
@@ -144,17 +171,37 @@ export function ProductInfoAdminModal({ setVisibility, onSave }: Props) {
 
         <ButtonWrapper>
           <BlueButton action={handleUpdateProduct} buttonText="Salvar" />
+          <DeleteAreaIcon onPress={() => setConfirmExclusion(true)}>
+            <Image
+              style={{ width: 24, height: 24 }}
+              source={require("../../assets/delete-icon.png")}
+            />
+          </DeleteAreaIcon>
         </ButtonWrapper>
-        {message && (
+      </Container>
+      {message && (
           <MessageBalloon
             title="Atenção"
-            text="Você precisa preencher todos campos!"
+            text="Você precisa alterar algo para salvar!"
             handleConfirmButton={() => {
               setMessage(false);
             }}
           />
         )}
-      </Container>
+        {confirmExclusion && (
+          <MessageBalloon
+            hasGoBackButton
+            title="Atenção!"
+            text="Tem certeza que deseja excluir esse item?"
+            handleConfirmButton={() => {
+              handleDelete();
+              setConfirmExclusion(false);
+            }}
+            handleCancelButton={() => {
+              setConfirmExclusion(false);
+            }}
+          />
+        )}
     </>
   );
 }

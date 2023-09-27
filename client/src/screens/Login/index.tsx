@@ -22,6 +22,7 @@ import {
 import { LoginUser } from "../../services/requests/User/Login";
 import { LoginData } from "../../services/interfaces";
 import { useAuth } from "../../services/context/AuthContext";
+import { myAccount } from "../../services/requests/User/MyAccount";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "Login">;
 
@@ -49,7 +50,7 @@ export default function Login({ navigation }: Props) {
     password: "",
   });
 
-  const { setIsSignedIn } = useAuth();
+  const { setIsSignedIn, setUser } = useAuth();
 
   function updateLoginData(newLoginData: Partial<LoginData>) {
     if (!loginData) return;
@@ -61,6 +62,8 @@ export default function Login({ navigation }: Props) {
       setIsLoading(true);
       setIsLoading(false);
       await LoginUser(loginData);
+      const data = await myAccount();
+      setUser(data);
       setIsSignedIn(true);
     } catch (err: any) {
       if (err.response.data.errors) {

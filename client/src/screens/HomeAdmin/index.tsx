@@ -24,6 +24,7 @@ import { addProduct } from "../../services/requests/Product/AddProduct";
 import { Product } from "../../services/interfaces";
 import { productList } from "../../services/requests/Product/ProductList";
 import { ProductInfoModal } from "../../components/ProductInfoModal";
+import { ProductInfoAdminModal } from "../../components/ProductInfoAdminModal";
 
 type ScreenRouteProp = RouteProp<RootStackParamList, "HomeAdmin">;
 
@@ -55,7 +56,7 @@ export function HomeAdmin({ navigation, route }: Props) {
 
   const [selectedFilter, setSelectedFilter] = useState<string>("Nenhum");
 
-  const [productChoice, setProductChoice] = useState<string>("");
+  const [productChoice, setProductChoice] = useState<number>(0);
 
   const [data, setData] = useState<Product[]>([]);
 
@@ -72,6 +73,14 @@ export function HomeAdmin({ navigation, route }: Props) {
     }
   };
 
+  useEffect(() => {
+    getProducts();
+  }, [newProductModal]);
+
+  useEffect(() => {
+    getProducts();
+  }, [productInfo]);
+
   return (
     <Container>
       {newProductModal && (
@@ -81,11 +90,11 @@ export function HomeAdmin({ navigation, route }: Props) {
         ></ProductModal>
       )}
       {productInfo && (
-        <ProductInfoModal
-          setVisibility={setNewProductModal}
+        <ProductInfoAdminModal
+          setVisibility={setProductInfo}
           onSave={() => getProducts}
-          name={productChoice}
-        ></ProductInfoModal>
+          id={productChoice}
+        ></ProductInfoAdminModal>
       )}
       {dropdownActive && (
         <BackgroundDark
@@ -109,7 +118,7 @@ export function HomeAdmin({ navigation, route }: Props) {
           />
         </AddItemWrapper>
         <>
-          <ListHeader leftText="Produtos cadastrados do sistema" />
+          <ListHeader leftText="Produtos cadastrados no sistema" />
         </>
         <FlatList
           style={{ marginBottom: 20 }}
@@ -117,14 +126,14 @@ export function HomeAdmin({ navigation, route }: Props) {
           renderItem={({ item }: ListRenderItemInfo<Product>) => (
             <ListItem
               title={item.name}
-              date={item.price.toString()}
+              date={item.id.toString()}
               onPress={() => {
-                setProductChoice(item.name);
+                setProductChoice(item.id);
                 setProductInfo(true);
               }}
             />
           )}
-          keyExtractor={(item: Product) => item.name}
+          keyExtractor={(item: Product) => item.id.toString()}
         />
       </>
     </Container>
