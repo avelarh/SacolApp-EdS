@@ -31,6 +31,19 @@ router.get('/',
     },
 );
 
+router.get('/:id',
+    verifyJWT,
+    checkRole(['admin', 'user']),
+    async (req, res, next) => {
+        try {
+            const cartItem = await CartItemService.getById(req.params.id);
+            res.status(statusCodes.SUCCESS).json(cartItem);
+        } catch(error){
+            next(error);
+        }
+    },
+);
+
 router.put('/:id',
     verifyJWT,
     checkRole(['admin', 'user']),

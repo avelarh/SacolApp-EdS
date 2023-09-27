@@ -35,6 +35,21 @@ class CartItemService {
         return cartItem;
     }
 
+    async getById(id) {
+        const cartItem = await CartItem.findByPk(id, {
+            include: {
+                model: Product,
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt'],
+                }
+            },
+        });
+        if (!cartItem) {
+            throw new QueryError(`Não há um produto no carrinho com o ID ${id}!`);
+        }
+        return {cartItem};
+    }
+
     async update(id, newAmount) {
         const cartItem = await CartItem.findByPk(id);
         if (!cartItem) {
