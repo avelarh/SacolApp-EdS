@@ -99,11 +99,6 @@ export function ProductInfoModal({ setVisibility, onSave, id }: Props) {
       }
       setIsLoading(false);
     } catch (err: any) {
-      if (err.response.data.errors) {
-        console.log(err.response.data.errors[0].msg);
-      } else {
-        console.log(err.response.data);
-      }
       setIsLoading(false);
     }
   }

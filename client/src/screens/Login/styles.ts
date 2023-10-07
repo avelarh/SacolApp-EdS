@@ -13,9 +13,15 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
+  font-size: ${RFValue(30)}px;
+  color: #14145A;
+  margin-top: ${RFValue(30)}px;
+`;
+
+export const AppTitle = styled.Text`
+  margin-top: ${RFValue(-120)}px;
   font-size: ${RFValue(40)}px;
   color: #14145A;
-  margin-bottom: ${RFValue(40)}px;
 `;
 
 export const TextFieldWrapper = styled.View`

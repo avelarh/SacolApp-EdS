@@ -10,7 +10,7 @@ router.post('/',
     async (req, res, next) => {
         try {
             const user_id = req.user.id; 
-            await CartItemService.create(req.body, user_id); /
+            await CartItemService.create(req.body, user_id); 
             res.status(statusCodes.CREATED).end(); 
         } catch (error) {
             next(error); 

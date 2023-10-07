@@ -12,9 +12,8 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(40)}px;
+  font-size: ${RFValue(30)}px;
   color: #14145A;
-  margin-bottom: ${RFValue(40)}px;
 `;
 
 export const SpaceAround = styled.View`

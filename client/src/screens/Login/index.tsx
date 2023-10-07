@@ -18,6 +18,7 @@ import {
   ButtonWrapper,
   RegisterContainer,
   RegisterContent,
+  AppTitle,
 } from "./styles";
 import { LoginUser } from "../../services/requests/User/Login";
 import { LoginData } from "../../services/interfaces";
@@ -80,6 +81,7 @@ export default function Login({ navigation }: Props) {
   return (
     <Container>
       <Image source={require("../../assets/logo.png")} style={styles.image} />
+      <AppTitle>SacolApp</AppTitle>
       <Title>Login</Title>
       <TextFieldWrapper>
         <TextField
@@ -151,9 +153,9 @@ const styles = StyleSheet.create({
     left: -1.5,
   },
   image: {
-    width: 250,
-    height: 250,
-    top: -40,
+    width: 330,
+    height: 330,
+    top: -70,
   },
   showPasswordButton: {
     position: "absolute",

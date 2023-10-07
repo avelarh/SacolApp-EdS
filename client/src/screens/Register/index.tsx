@@ -264,6 +264,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   image: {
+    marginBottom: -40,
     width: 250,
     height: 250,
   },

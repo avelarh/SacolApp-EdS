@@ -56,7 +56,6 @@ export function HomePage({ navigation, route }: Props) {
     try {
       setIsLoading(true);
       const data = await productListCart();
-      console.log(data);
       if (data) {
         setData(data);
       }
