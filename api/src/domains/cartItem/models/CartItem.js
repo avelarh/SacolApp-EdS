@@ -27,14 +27,22 @@ const CartItem = sequelize.define('CartItem', {
 
 //User.hasMany(CartItem);
 
-CartItem.belongsTo(User, {
-    foreignKey: "userId"
+User.hasMany(CartItem, {
+    foreignKey: "userId",
+    onDelete: 'CASCADE',
 });
 
-//Product.hasMany(CartItem);
+CartItem.belongsTo(User, {
+    foreignKey: "userId",
+});
+
+Product.hasMany(CartItem, {
+    foreignKey: "productId",
+    onDelete: 'CASCADE',
+});
 
 CartItem.belongsTo(Product, {
-    foreignKey: "productId"
+    foreignKey: "productId",
 })
 
 CartItem.sync({alter: false, force: false})

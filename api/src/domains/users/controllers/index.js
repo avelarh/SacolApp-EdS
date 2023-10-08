@@ -84,7 +84,6 @@ router.put('/:id',
 
 router.delete('/:id',
   verifyJWT,
-  checkRole(["admin"]),
   async (req, res, next) => {
     try {
       await UserService.delete(req.params.id);
