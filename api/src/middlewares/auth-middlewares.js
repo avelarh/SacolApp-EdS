@@ -1,4 +1,4 @@
-const { JwtPayload, sign, verify } = require ('jsonwebtoken');
+const { JwtPayload, sign, verify, TokenExpiredError } = require ('jsonwebtoken');
 const { compare } = require ('bcrypt');
 const User = require ('../domains/users/models/User');
 const PermissionError = require ('../../errors/PermissionError');
@@ -55,10 +55,14 @@ function notLoggedIn(req, res, next) {
     const token = cookieExtractor(req);
 
     if (token) {
-      const decoded = verify(token, getEnv('SECRET_KEY'));
-      if (decoded) {
-        throw new PermissionError('Você já está logado no sistema!');
-      }
+      verify(token, getEnv('SECRET_KEY'),
+        (err, decoded) => {
+          if (!(err instanceof TokenExpiredError)) {
+            throw new PermissionError(err ||
+              'Você já está logado no sistema!');
+          }
+        },
+      );
     }
     next();
   } catch (error) {
