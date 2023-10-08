@@ -57,9 +57,7 @@ class ProductService {
         if (!product) {
             throw new QueryError(`Não há um produto com o ID ${id}!`);
         }
-        const key = product.image;
         await product.destroy();
-        return key;
     }
 }
 
