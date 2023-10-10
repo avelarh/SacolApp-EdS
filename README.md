@@ -94,5 +94,9 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
 # Diagramas UML
 ![image](https://github.com/avelarh/SacolApp-EdS/assets/103467427/7f94ea09-00c6-44a8-82a4-e94fb467c916)
 
+[Modelagem SacolApp.pdf](https://github.com/avelarh/SacolApp-EdS/files/12851564/Modelagem.SacolApp.pdf)
+
+
+
 
 
