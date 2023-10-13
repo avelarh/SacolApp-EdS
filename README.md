@@ -91,3 +91,10 @@ adicionem itens, que são cadastrados pelo vendedor, ao carrinho. O sistema cham
     
     #B04 [BE] Rotas para CRUD de admin: [Avelar]
 
+# Diagramas UML
+![image](https://github.com/avelarh/SacolApp-EdS/assets/103467427/7f94ea09-00c6-44a8-82a4-e94fb467c916)
+
+![Modelagem SacolApp-1](https://github.com/avelarh/SacolApp-EdS/assets/103266751/9268de1d-8d8b-4ecf-996f-a436938391cf)
+
+
+
